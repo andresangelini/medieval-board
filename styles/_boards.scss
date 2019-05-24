@@ -1,0 +1,333 @@
+// STYLING
+
+.board {
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  position: absolute;
+  
+  @media only screen and (max-width: 480px) {
+    margin-left: -50%;
+    width: 100%;
+  }
+  
+  &--type-bulletin {
+    /* Use SVG fragment identifiers to select specific parts of the image. */
+    background-image: url("#{$path-to-board}#l-top-chains"),
+                      url("#{$path-to-board}#l-plaque"),
+                      url("#{$path-to-board}#l-bulletin-corners"),
+                      url("#{$path-to-board}#l-bulletin-horizontal-sides"),
+                      url("#{$path-to-board}#l-vertical-sides"),
+                      url("#{$path-to-board}#l-bulletin-holes"),
+                      url("#{$path-to-board}#l-horizontal-sides-depth"),
+                      url("#{$path-to-board}#l-bulletin-corners-depth"),
+                      url("#{$path-to-board}#l-horizontal-sides-shadow"),
+                      url("#{$path-to-board}#l-vertical-sides-shadow"),
+                      url("#{$path-to-board}#l-bulletin-corners-shadow"),
+                      url("#{$path-to-board}#l-bulletin-holes-shadow"),
+                      url("#{$path-to-board}#l-bulletin-planks");
+
+    background-position: center #{-$chains-bottom-offset},                // #l-top-chains
+                         center bottom,                                   // #l-plaque
+                         center bottom,                                   // #l-bulletin-corners (diffuse and specular)
+                         center bottom,                                   // #l-bulletin-horizontal-sides (diffuse and specular)
+                         center $bulletin-vertical-position-top,          // #l-vertical-sides
+                         center bottom,                                   // #l-bulletin-holes
+                         center bottom,                                   // #l-horizontal-sides-depth
+                         center bottom,                                   // #l-bulletin-corners-depth
+                         center bottom,                                   // #l-horizontal-sides-shadow
+                         center $bulletin-vertical-position-top,          // #l-vertical-sides-shadow
+                         center bottom,                                   // #l-bulletin-corners-shadow
+                         center bottom,                                   // #l-bulletin-holes-shadow
+                         center bottom;                                   // #l-bulletin-planks
+
+    background-size: $bulletin-holes-width $bulletin-chains-height,       // #l-top-chains
+                     35% $bulletin-board-height,                          // #l-plaque
+                     100% $bulletin-board-height,                         // #l-bulletin-corners (diffuse and specular)
+                     $bulletin-horizontal-width $bulletin-board-height,   // #l-bulletin-horizontal-sides (diffuse and specular)
+                     100% $bulletin-vertical-height,                      // #l-vertical-sides
+                     $bulletin-holes-width $bulletin-board-height,        // #l-bulletin-holes
+                     $bulletin-horizontal-width $bulletin-board-height,   // #l-horizontal-sides-depth
+                     100% $bulletin-board-height,                         // #l-bulletin-corners-depth
+                     $bulletin-horizontal-width $bulletin-board-height,   // #l-horizontal-sides-shadow
+                     100% $bulletin-vertical-height,                      // #l-vertical-sides-shadow
+                     100% $bulletin-board-height,                         // #l-bulletin-corners-shadow
+                     $bulletin-holes-shadow-width $bulletin-board-height, // #l-bulletin-holes-shadow
+                     100% $bulletin-board-height;                         // #l-bulletin-planks
+    
+    /* IE < 11 don't scale SVGs properly when used as background images. Since IE < 11 don't support CSS pointer-events, use it to detect these versions. */
+    @at-root .no-csspointerevents & {
+      
+      & div {
+        position: absolute;
+      }
+
+      /* Instead of using a single div with multiple background images, use multiple divs each with their own background image pointing to its respective layer in the SVG stack. */
+      & div:nth-child(13) {@include plaque("#{$path-to-board}#l-plaque");}
+      & div:nth-child(12) {@include chains("#{$path-to-board}#l-top-chains", $bulletin-holes-width, $bulletin-chains-height, $chains-bottom-offset);}
+      & div:nth-child(11) {@include corners("#{$path-to-board}#l-bulletin-corners", $bulletin-board-height, 0);}
+      & div:nth-child(10) {@include horizontal-sides("#{$path-to-board}#l-bulletin-horizontal-sides", $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(9) {@include vertical-sides("#{$path-to-board}#l-vertical-sides", $bulletin-vertical-height, $bulletin-board-height, $bulletin-side-position-left, 1);}
+      & div:nth-child(8) {@include holes("#{$path-to-board}#l-bulletin-holes", $bulletin-holes-width, $bulletin-board-height, 0);}
+      & div:nth-child(7) {@include horizontal-sides("#{$path-to-board}#l-horizontal-sides-depth", $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(6) {@include corners("#{$path-to-board}#l-bulletin-corners-depth", $bulletin-board-height, 0);}
+      & div:nth-child(5) {@include horizontal-sides("#{$path-to-board}#l-horizontal-sides-shadow", $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(4) {@include vertical-sides("#{$path-to-board}#l-vertical-sides-shadow", $bulletin-vertical-height, $bulletin-board-height, $bulletin-side-position-left, 1);}
+      & div:nth-child(3) {@include corners("#{$path-to-board}#l-bulletin-corners-shadow", $bulletin-board-height, 0);}
+      & div:nth-child(2) {@include holes("#{$path-to-board}#l-bulletin-holes-shadow", $bulletin-holes-shadow-width, $bulletin-board-height, 0);}
+      & div:nth-child(1) {@include planks("#{$path-to-board}#l-bulletin-planks", $bulletin-board-height, 0);}
+    }
+  
+    /* *
+     *  1) Safari and Safari iOS don't support SVG Fragment Identifiers at all, so use JPEG 2000 image format to detect
+     *     both (down to 4.0 and 4.3 respectively) since they are the only ones that support this feature.
+     *  2) Chrome versions 36 to 49 only support SVG Fragment Identifiers when used inside <img> elements. Use the WebP image format to detect webkit
+     *     browsers and then the support for Passive event listener to detect Chrome 50 and older.
+     *  3) Safari 6, iOS Safari 6.1 and Chrome versions 25 to 19 suupport calc() with -webkit- prefix but older do not support it at all. Fixed with Autoprefixer.
+     */
+    @at-root .jpeg2000 &, // Change back to .jpeg2000 after testing.
+             .no-passiveeventlisteners.webp & {
+      background: none; // Remove after testing.
+      div {
+        /* Safari won't display background image if background size and position aren't explicity set. */
+        background-size: 100% 100%;
+        background-position: center top;
+        position: absolute;
+      }
+      
+      /* Instead of using a signle div with multiple background images pointing to a signle SVG file, use multiple divs, each with a single background
+         image pointing to an individual SVG file containing its respective layer of the original SVG stack. */
+      & div:nth-child(13) {@include plaque($path-to-plaque);}
+      & div:nth-child(12) {@include chains($path-to-top-chains, $bulletin-holes-width, $bulletin-chains-height, $chains-bottom-offset);}
+      & div:nth-child(11) {@include corners($path-to-bulletin-corners, $bulletin-board-height, 0);}
+      & div:nth-child(10) {@include horizontal-sides($path-to-bulletin-horizontal-sides, $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(9) {@include vertical-sides($path-to-vertical-sides, $bulletin-vertical-height, $bulletin-board-height, $bulletin-side-position-left, 1);}
+      & div:nth-child(8) {@include holes($path-to-bulletin-holes, $bulletin-holes-width, $bulletin-board-height, 0);}
+      & div:nth-child(7) {@include horizontal-sides($path-to-horizontal-sides-depth, $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(6) {@include corners($path-to-bulletin-corners-depth, $bulletin-board-height, 0);}
+      & div:nth-child(5) {@include horizontal-sides($path-to-horizontal-sides-shadow, $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(4) {@include vertical-sides($path-to-vertical-sides-shadow, $bulletin-vertical-height, $bulletin-board-height, $bulletin-side-position-left, 1);}
+      & div:nth-child(3) {@include corners($path-to-bulletin-corners-shadow, $bulletin-board-height, 0);}
+      & div:nth-child(2) {@include holes($path-to-bulletin-holes-shadow, $bulletin-holes-shadow-width, $bulletin-board-height, 0);}
+      & div:nth-child(1) {@include planks($path-to-bulletin-planks, $bulletin-board-height, 0);}
+    }
+    
+    /* In Safari 11 SVG pattern elements with alpha are displayed with a black background instead of transparency. */
+    @at-root .jpeg2000.peerconnection & { // Change back to .jpeg2000 after testing.
+      background-image: none; // Just make sure no background is displayed.
+      
+      div {
+        position: absolute;
+      }
+      
+      & div:nth-child(13) {@include plaque($path-to-plaque);}
+      & div:nth-child(12) {
+        @include chains-multiple-backgrounds($chains-width: $bulletin-holes-width,
+                                             $chains-height: $bulletin-chains-height,
+                                             $profile-links-y: calc(100% + #{$chains-top-offset} - #{$chains-bottom-offset}),
+                                             $profile-link-dy: -$chains-link-height,
+                                             $front-links-y: calc(100% - #{$chains-link-height} + #{$chains-top-offset} - #{$chains-bottom-offset}),
+                                             $front-link-dy: calc(-#{$chains-link-height} / 2));
+        box-sizing: border-box;
+      }
+      & div:nth-child(11) {@include corners($path-to-bulletin-corners, $bulletin-board-height, 0);}
+      & div:nth-child(10) {@include horizontal-sides($path-to-bulletin-horizontal-sides, $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(9) {@include vertical-sides($path-to-vertical-sides, $bulletin-vertical-height, $bulletin-board-height, $bulletin-side-position-left, 1);}
+      & div:nth-child(8) {@include holes($path-to-bulletin-holes, $bulletin-holes-width, $bulletin-board-height, 0);}
+      & div:nth-child(7) {@include horizontal-sides($path-to-horizontal-sides-depth, $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(6) {@include corners($path-to-bulletin-corners-depth, $bulletin-board-height, 0);}
+      & div:nth-child(5) {@include horizontal-sides($path-to-horizontal-sides-shadow, $bulletin-horizontal-width, $bulletin-board-height, 0);}
+      & div:nth-child(4) {@include vertical-sides($path-to-vertical-sides-shadow, $bulletin-vertical-height, $bulletin-board-height, $bulletin-side-position-left, 1);}
+      & div:nth-child(3) {@include corners($path-to-bulletin-corners-shadow, $bulletin-board-height, 0);}
+      & div:nth-child(2) {@include holes($path-to-bulletin-holes-shadow, $bulletin-holes-shadow-width, $bulletin-board-height, 0);}
+      & div:nth-child(1) {
+        @include planks-multiple-backgrounds($bulletin-corner-width, $bulletin-board-height);
+        bottom: 0;
+      }
+    }
+  }
+
+  &--type-sign {
+    /* Use SVG fragment identifiers to select specific parts of the image. */
+    background-image: url("#{$path-to-board}#l-top-chains"),
+                      url("#{$path-to-board}#l-bottom-chains"),
+                      url("#{$path-to-board}#l-sign-corners"),
+                      url("#{$path-to-board}#l-sign-horizontal-sides"),
+                      url("#{$path-to-board}#l-vertical-sides"),
+                      url("#{$path-to-board}#l-sign-holes"),
+                      url("#{$path-to-board}#l-horizontal-sides-depth"),
+                      url("#{$path-to-board}#l-sign-corners-depth"),
+                      url("#{$path-to-board}#l-horizontal-sides-shadow"),
+                      url("#{$path-to-board}#l-vertical-sides-shadow"),
+                      url("#{$path-to-board}#l-sign-corners-shadow"),
+                      url("#{$path-to-board}#l-sign-holes-shadow"),
+                      url("#{$path-to-board}#l-sign-planks");
+
+    background-position: center #{-$chains-bottom-offset},            // #l-top-chains
+                         center $sign-chains-position-bottom,         // #l-bottom-chains
+                         center center,                               // #l-sign-corners (diffuse and specular)
+                         center center,                               // #l-sign-horizontal-sides (diffuse and specular)
+                         center $sign-vertical-position-top,          // #l-vertical-sides
+                         center center,                               // #l-sign-holes
+                         center center,                               // #l-horizontal-sides-depth
+                         center center,                               // #l-sign-corners-depth
+                         center center,                               // #l-bulletin-horizontal-sides-shadow
+                         center $sign-vertical-position-top,          // #l-vertical-sides-shadow
+                         center center,                               // #l-sign-corners-shadow
+                         center center,                               // #l-sign-holes-shadow
+                         center center;                               // #l-sign-planks
+
+    background-size: $sign-holes-width $sign-top-chains-height,       // #l-top-chains
+      $sign-holes-width $sign-top-chains-height,                      // #l-bottom-chains
+      100% $sign-board-height,                                        // #l-sign-corners (diffuse and specular)
+      $sign-horizontal-width $sign-board-height,                      // #l-sign-horizontal-sides (diffuse and specular)
+      100% $sign-vertical-height,                                     // #l-vertical-sides
+      $sign-holes-width $sign-board-height,                           // #l-sign-holes
+      $sign-horizontal-width $sign-board-height,                      // #l-horizontal-sides-depth
+      100% $sign-board-height,                                        // #l-sign-corners-depth
+      $sign-horizontal-width $sign-board-height,                      // #l-bulletin-horizontal-sides-shadow
+      100% $sign-vertical-height,                                     // #l-vertical-sides-shadow
+      100% $sign-board-height,                                        // #l-sign-corners-shadow
+      $sign-holes-shadow-width $sign-board-height,                    // #l-sign-holes-shadow
+      100% $sign-board-height;                                        // #l-sign-planks
+    
+    /* IE < 11 don't scale SVGs properly when used as background images. Since IE < 11 don't support CSS pointer-events, use it to detect these versions. */
+    @at-root .no-csspointerevents & {
+      background-color: blue;
+      background-image: none;
+      overflow: hidden;
+      
+      & div {
+        position: absolute;
+      }
+      
+      /* Instead of using a single div with multiple background images, use multiple divs each with their own background image pointing to its respective layer in the SVG stack. */
+      & div:nth-child(13) {@include chains("#{$path-to-board}#l-top-chains", $sign-holes-width, #{calc-chains-height($sign-board-height, $chains-bottom-offset, 2)}, $chains-bottom-offset);}
+      & div:nth-child(12) {
+        @include chains("#{$path-to-board}#l-bottom-chains", $sign-holes-width, #{calc-chains-height($sign-board-height, $chains-bottom-offset, 2)}, $chains-bottom-offset);
+        top: $sign-bottom-chains-div-position-top; // Overwrite function's heihgt.
+      }
+      & div:nth-child(11) {@include corners("#{$path-to-board}#l-sign-corners", $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(10) {@include horizontal-sides("#{$path-to-board}#l-sign-horizontal-sides", $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(9) {@include vertical-sides("#{$path-to-board}#l-vertical-sides", $sign-vertical-height, $sign-board-height, $sign-side-position-left, 2);}
+      & div:nth-child(8) {@include holes("#{$path-to-board}#l-sign-holes", $sign-holes-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(7) {@include horizontal-sides("#{$path-to-board}#l-horizontal-sides-depth", $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(6) {@include corners("#{$path-to-board}#l-sign-corners-depth", $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(5) {@include horizontal-sides("#{$path-to-board}#l-horizontal-sides-shadow", $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(4) {@include vertical-sides("#{$path-to-board}#l-vertical-sides-shadow", $sign-vertical-height, $sign-board-height, $sign-side-position-left, 2);}
+      & div:nth-child(3) {@include corners("#{$path-to-board}#l-sign-corners-shadow", $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(2) {@include holes("#{$path-to-board}#l-sign-holes-shadow", $sign-holes-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(1) {@include planks("#{$path-to-board}#l-sign-planks", $sign-board-height, $sign-board-position-top);}
+    }
+
+    /* *
+     *  1) Safari and Safari iOS don't support SVG Fragment Identifiers at all, so use JPEG 2000 image format to detect
+     *     both (down to 4.0 and 4.3 respectively) since they are the only ones that support this feature.
+     *  2) Chrome versions 36 to 49 only support SVG Fragment Identifiers when used inside <img> elements. Use the WebP image format to detect webkit
+     *     browsers and then the support for Passive event listener to detect Chrome 50 and older.
+     *  3) Safari 6, iOS Safari 6.1 and Chrome versions 25 to 19 suupport calc() with -webkit- prefix but older do not support it at all. Fixed with Autoprefixer.
+     */
+    @at-root .jpeg2000 &, // Change back to .jpeg2000 after testing.
+             .no-passiveeventlisteners.webp & {
+      background-image: none;
+      overflow: hidden;
+      
+      div {
+        // Safari won't display background image if background size and position aren't explicity set.
+        background-size: 100% 100%;
+        background-position: center top;
+        position: absolute;
+      }
+      
+      /* Instead of using a signle div with multiple background images pointing to a signle SVG file, use multiple divs, each with a single background
+         image pointing to an individual SVG file containing its respective layer of the original SVG stack. */
+      & div:nth-child(13) { @include chains($path-to-top-chains, $sign-holes-width, $sign-top-chains-height, $chains-bottom-offset);}
+      & div:nth-child(12) {
+        @include chains($path-to-bottom-chains, $sign-holes-width, $sign-bottom-chains-height, $chains-bottom-offset);
+        top: $sign-bottom-chains-div-position-top; // Overwrite function's heihgt.
+      }
+      & div:nth-child(11) {@include corners($path-to-sign-corners, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(10) {@include horizontal-sides($path-to-sign-horizontal-sides, $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(9) {@include vertical-sides($path-to-vertical-sides, $sign-vertical-height, $sign-board-height, $sign-side-position-left, 2);}
+      & div:nth-child(8) {@include holes($path-to-sign-holes, $sign-holes-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(7) {@include horizontal-sides($path-to-horizontal-sides-depth, $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(6) {@include corners($path-to-sign-corners-depth, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(5) {@include horizontal-sides($path-to-horizontal-sides-shadow, $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(4) {@include vertical-sides($path-to-vertical-sides-shadow, $sign-vertical-height, $sign-board-height, $sign-side-position-left, 2);}
+      & div:nth-child(3) {@include corners($path-to-sign-corners-shadow, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(2) {@include holes($path-to-sign-holes-shadow, $sign-holes-shadow-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(1) {@include planks($path-to-sign-planks, $sign-board-height, $sign-board-position-top);}
+    }
+
+    /* In Safari 11 SVG pattern elements with alpha are displayed with a black background instead of transparency. */
+    @at-root .jpeg2000.peerconnection & { // Change back to .jpeg2000 after testing.
+      background-image: none; // Just make sure no background is displayed.
+      
+      div {
+        position: absolute;
+      }
+      
+      & div:nth-child(13) {
+        @include chains-multiple-backgrounds($chains-width: $sign-holes-width,
+                                             $chains-height: $sign-top-chains-height,
+                                             $profile-links-y: calc(100% + #{$chains-top-offset} - #{$chains-bottom-offset}),
+                                             $profile-link-dy: -$chains-link-height,
+                                             $front-links-y: calc(100% - #{$chains-link-height} + #{$chains-top-offset} - #{$chains-bottom-offset}),
+                                             $front-link-dy: calc(-#{$chains-link-height} / 2));
+      }
+      & div:nth-child(12) {
+        @include chains-multiple-backgrounds($chains-width: $sign-holes-width,
+                                             $chains-height: $sign-bottom-chains-height,
+                                             $profile-links-y: -$chains-top-offset,
+                                             $profile-link-dy: $chains-link-height,
+                                             $front-links-y: calc(#{$chains-link-height} - #{$chains-top-offset}),
+                                             $front-link-dy: calc(#{$chains-link-height} / 2));
+        bottom: 0;
+      }
+      & div:nth-child(11) {@include corners($path-to-sign-corners, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(10) {@include horizontal-sides($path-to-sign-horizontal-sides, $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(9) {@include vertical-sides($path-to-vertical-sides, $sign-vertical-height, $sign-board-height, $sign-side-position-left, 2);}
+      & div:nth-child(8) {@include holes($path-to-sign-holes, $sign-holes-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(7) {@include horizontal-sides($path-to-horizontal-sides-depth, $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(6) {@include corners($path-to-sign-corners-depth, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(5) {@include horizontal-sides($path-to-horizontal-sides-shadow, $sign-horizontal-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(4) {@include vertical-sides($path-to-vertical-sides-shadow, $sign-vertical-height, $sign-board-height, $sign-side-position-left, 2);}
+      & div:nth-child(3) {@include corners($path-to-sign-corners-shadow, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(2) {@include holes($path-to-sign-holes-shadow, $sign-holes-shadow-width, $sign-board-height, $sign-board-position-top);}
+      & div:nth-child(1) {
+        @include planks-multiple-backgrounds($sign-corner-width, calc((#{$sign-side-position-left} * 2) + #{$sign-vertical-height}));
+        top: calc(#{$sign-board-position-top});
+      }
+    }
+
+    /* Firefox 15 and older don't display SVG elements that use viewbox attribute. Use sandbox support to
+       decide whether to display or not the board. Note that as a compromise Firefox 16 which does display
+       the SVG properly but it will be skipped for convenience. */
+    @at-root .cssmozoutlineradius.no-sandbox {
+
+      ::after {
+        @include full-page-msg($browser-is-too-old);
+      }
+
+      .board {
+        display: none;
+      }
+    }
+  }
+
+  /* IE < 10 and very old version of FF, Chrome, Safari, Opera, etc., do not display SVGs properly, probably due to
+     incompatibility issues with <pattern> elements. Detect support for CSS Gradients to avoid displaying broken graphics. */
+  @at-root .no-csscalc,
+           .no-cssgradients,
+           /* IE < 10 dont't support innerHTML on html elements. */
+           .no-generatedcontent {
+    body,
+    /* Remember, IE8 only supports the single-colon CSS 2.1 syntax (i.e. :pseudo-class). This is fixed width Autoprefixer. */
+    ::after {
+      @include full-page-msg($browser-is-too-old);
+    }
+             
+    .board {
+      display: none;
+    }
+  }
+}

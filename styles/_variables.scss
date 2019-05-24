@@ -1,0 +1,96 @@
+// VARIABLES
+
+// Functions valid values.
+$valid-positions: "keyword", "global", "<length>", "<percentages>", "calc()",
+                    "edge offset";
+$valid-sizes: "keyword", "global", "auto", "<length>", "<percentages>",
+                "calc()";
+$valid-offsets: "<length>", "<percentages>", "calc()";
+$valid-ranges: "number", "not 0";
+
+// Base colors.
+$color-cape-palliser                  : #a2703f;
+
+// Elements colors.
+$color-planks-diffuse                 : $color-cape-palliser;
+
+// Change these values to your liking. The length of the chains will adjust automatically.
+$bulletin-board-height                : 95%; // The height of the board alone in percentage relative to the bulletin's.
+$bulletin-plaque-width                : 35%; 
+$sign-board-height                    : 80%; // The height of the board alone in percentage relative to the sign's.
+
+// These values are common to both types of boards. DO NOT CHANGE unless you modified the SVG graphics.
+$board-depth                          : 6.5px;
+$shadow-width                         : 2.16px;
+$side-overlap                         : 9.4px;
+$side-curve-left                      : 5px;
+$side-curve-right                     : calc(100% - #{$side-curve-left});
+$grooves-height                       : 568px;
+$grooves-width                        : 568px;
+$shade-height                         : 760px;
+$chains-link-height                   : 45.94px;
+$chains-top-offset                    : 4.24px; // The distance from the SVG's top to the chains' top.
+$chains-bottom-offset                 : 22px; // The distance from the SVG's bottom to the chains' bottom.
+
+// Measurements for 'bulletin' type board. DO NOT CHANGE unless you modified the SVG graphics.
+$bulletin-corner-width                : 56px;
+$bulletin-side-position-left          : calc-side-position-left($bulletin-corner-width);
+$bulletin-side-position-right         : calc-side-position-right($bulletin-corner-width);
+$bulletin-side-position-bottom        : calc-side-position-bottom($bulletin-corner-width);
+$bulletin-horizontal-width            : calc-horizontal-width($bulletin-corner-width);
+$bulletin-vertical-height             : calc-vertical-height($bulletin-corner-width, $bulletin-board-height);
+$bulletin-vertical-position-top       : calc-vertical-position-top($bulletin-corner-width);
+$bulletin-chains-height               : calc-chains-height($bulletin-board-height, $chains-bottom-offset, 1);
+$bulletin-holes-width                 : calc-holes-width($bulletin-corner-width);
+$bulletin-holes-shadow-width          : calc-holes-shadow-width($bulletin-corner-width);
+
+// Measurements for 'sign' type board. DO NOT CHANGE unless you modified the SVG graphics.
+$sign-corner-width                    : 29.78px;
+$sign-side-position-left              : calc-side-position-left($sign-corner-width);
+$sign-side-position-right             : calc-side-position-right($sign-corner-width);
+$sign-side-position-bottom            : calc-side-position-bottom($sign-corner-width);
+$sign-horizontal-width                : calc-horizontal-width($sign-corner-width);
+$sign-board-position-top              : calc-board-position-top($sign-board-height, 2);
+$sign-vertical-height                 : calc-vertical-height($sign-corner-width, $sign-board-height);
+$sign-vertical-position-top           : calc(50% - 3px); // Remember: background position in perecentage works differently.
+$sign-chains-position-bottom          : calc(100% + #{$chains-bottom-offset});
+$sign-top-chains-height               : calc-chains-height($sign-board-height, $chains-bottom-offset, 2);
+$sign-bottom-chains-position-top      : calc(#{$chains-bottom-offset} / 2);
+$sign-bottom-chains-div-position-top  : calc(100% + 22px - #{strip-calc($sign-top-chains-height)});
+$sign-bottom-chains-height            : calc-chains-height($sign-board-height, #{strip-calc($sign-bottom-chains-position-top)}, 2);
+$sign-holes-width                     : calc-holes-width($sign-corner-width);
+$sign-holes-width-fix                 : 5px;
+$sign-holes-position-left             : calc-holes-position-left($sign-corner-width);
+$sign-holes-position-right            : calc-holes-position-right($sign-corner-width);
+$sign-holes-shadow-width              : calc-holes-shadow-width($sign-corner-width);
+
+// URL paths.
+$path-to-board                        : "https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg";
+
+// Multiple SVGs are needed as a fallback for browsers that don't support SVG Fragment Identifiers.
+$path-to-top-chains                   : "https://cdn.rawgit.com/andresangelini/f3415703d9665bc6d2e0fcdefd90c252/raw/8a9d7f56730094d681762638c76db1df3ffdd538/topChains.svg";
+$path-to-bottom-chains                : "https://cdn.rawgit.com/andresangelini/96fc2fe2937f63997f972f203509bb28/raw/04eb599bf86ffce922d53071c8a10013743a3436/bottomChains.svg";
+$path-to-chain-link                   : "https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg";
+$path-to-plaque                       : "https://cdn.rawgit.com/andresangelini/71186cfd071e53e4b229ef78ca60207f/raw/c33418e6d8c07c71914cc08bbc7e442d58a7f838/plaque.svg";
+$path-to-bulletin-corners             : "https://cdn.rawgit.com/andresangelini/ba8d6301a441f9477aff3a93fc93a730/raw/32c534c1f196783a4243d4edd7ec1c268a0b9eaf/bulletinCorners.svg";
+$path-to-bulletin-horizontal-sides    : "https://cdn.rawgit.com/andresangelini/6a8860e1d3de990f1ce5a7d27aa26a30/raw/2412b8174843f846425aad281f4ad7dab3146fd7/bulletinHorizontalSides.svg";
+$path-to-vertical-sides               : "https://cdn.rawgit.com/andresangelini/22f602b5edb5671703ead1224719c029/raw/97d9e61f03bf75e1e75a4ce7a68b3ccaf6302f5c/verticalSides.svg";
+$path-to-bulletin-holes               : "https://cdn.rawgit.com/andresangelini/0fd40f69566ddb6eed16ca9154a1cdbf/raw/5be1d70ebad0936f390a57c8fa04331361a70d76/bulletinHoles.svg";
+$path-to-horizontal-sides-depth       : "https://cdn.rawgit.com/andresangelini/faa4ae5d44ce839a00161699039e70e4/raw/2a48fb59bd15ff0d96dd1e996a5157619ccea832/horizontalSidesDepth.svg";
+$path-to-bulletin-corners-depth       : "https://cdn.rawgit.com/andresangelini/fc167511c668f4f22a843dd5ad032c4f/raw/9ca8e54fd838d1dcbb2ac84aee0dd0e5395b993b/bulletinCornersDepth.svg";
+$path-to-horizontal-sides-shadow      : "https://cdn.rawgit.com/andresangelini/81f11231029c5ca6fbf1d8dcfa723319/raw/e2dceca30c636d82df3110583a6df4f508166b88/horizontalSidesShadow.svg";
+$path-to-vertical-sides-shadow        : "https://cdn.rawgit.com/andresangelini/a9fc2dec3f4ce794ed0f4e35c5d723ac/raw/06960348119880580e6fb49b344c9f69793241bb/verticalSidesShadow.svg";
+$path-to-bulletin-corners-shadow      : "https://cdn.rawgit.com/andresangelini/39b00b169ef54b45aadf7a1b90df9e9f/raw/bd9afd6fbeea29b140f32a58e038fc2c20e15836/bulletinCornersShadow.svg";
+$path-to-bulletin-holes-shadow        : "https://cdn.rawgit.com/andresangelini/ea2cbe38787edd3feaa6c0b072f40b6c/raw/3dc3ba415a2d88b6bf86eb3ce830cbfcf3117b73/bulletinHolesShadow.svg";
+$path-to-bulletin-planks              : "https://cdn.rawgit.com/andresangelini/04efef31dfb360e613711a8c37aa96fb/raw/311911b99a4d0855a5f47f8aec5a93ed93be67e4/bulletinPlanks.svg";
+$path-to-sign-corners                 : "https://cdn.rawgit.com/andresangelini/00adf3ff339050dd484ef4133d581639/raw/9204a853448f0aef66be6aaaf09c40968d44e779/signCorners.svg";
+$path-to-sign-horizontal-sides        : "https://cdn.rawgit.com/andresangelini/3e76e8ae560573c809d7af9c32d79519/raw/cecd5219dd3c54a2b6bb47014e08b5e4caec306f/signHorizontalSides.svg";
+$path-to-sign-holes                   : "https://cdn.rawgit.com/andresangelini/62d7a5f742d96c5a8f4f6639f523b18e/raw/fc0c5666dfdf7daab0edf6ae2e5ea0bcf7a0da8c/signHoles.svg";
+$path-to-sign-corners-depth           : "https://cdn.rawgit.com/andresangelini/ebd77441753241e7fe7715e732928f4e/raw/978b2b4cf77ac864b9b908b686c17e5c3f63d5e0/signCornersDepth.svg";
+$path-to-sign-corners-shadow          : "https://cdn.rawgit.com/andresangelini/1914067a3580101541fe0c0db4b22128/raw/5a78a3dd2c18db6cd796157f2fcbbddbb9b5aeba/signCornersShadow.svg";
+$path-to-sign-holes-shadow            : "https://cdn.rawgit.com/andresangelini/a1dcb47272d9745ee2a57dd4b73d5678/raw/6e0f2aa4de5bbe89e3877c0976ec470e74259189/signHolesShadow.svg";
+$path-to-sign-planks                  : "https://cdn.rawgit.com/andresangelini/f0c776eef5d1a6edc29caa351c572075/raw/e20d6b5ff84f3428a45cd8a9cc8a3b0f11bde7f6/signPlanks.svg";
+$path-to-grooves                      : "https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg";
+$path-to-shades                       : "https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg";
+
+$browser-is-too-old: "Oops! It seems your browser or device isn't able to display this site properly. Please, update it.";

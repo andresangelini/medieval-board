@@ -1,0 +1,895 @@
+.board {
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  position: absolute;
+  /* IE < 10 and very old version of FF, Chrome, Safari, Opera, etc., do not display SVGs properly, probably due to
+     incompatibility issues with <pattern> elements. Detect support for CSS Gradients to avoid displaying broken graphics. */
+}
+
+@media only screen and (max-width: 480px) {
+  .board {
+    margin-left: -50%;
+    width: 100%;
+  }
+}
+
+.board--type-bulletin {
+  /* Use SVG fragment identifiers to select specific parts of the image. */
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-top-chains"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-plaque"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-corners"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-horizontal-sides"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-holes"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-depth"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-corners-depth"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-corners-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-holes-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-planks");
+  background-position: center -22px, center bottom, center bottom, center bottom, center calc(100% - (56px - 9.4px) - 6.5px), center bottom, center bottom, center bottom, center bottom, center calc(100% - (56px - 9.4px) - 6.5px), center bottom, center bottom, center bottom;
+  background-size: calc((100% - (56px - 9.4px) * 2) * 0.8) calc(((100% - 95%) / 1) + 22px * 2), 35% 95%, 100% 95%, calc(100% - (56px - 9.4px) * 2) 95%, 100% calc(95% - (56px - 9.4px) * 2 - 6.5px), calc((100% - (56px - 9.4px) * 2) * 0.8) 95%, calc(100% - (56px - 9.4px) * 2) 95%, 100% 95%, calc(100% - (56px - 9.4px) * 2) 95%, 100% calc(95% - (56px - 9.4px) * 2 - 6.5px), 100% 95%, calc(((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2) 95%, 100% 95%;
+  /* IE < 11 don't scale SVGs properly when used as background images. Since IE < 11 don't support CSS pointer-events, use it to detect these versions. */
+  /* *
+     *  1) Safari and Safari iOS don't support SVG Fragment Identifiers at all, so use JPEG 2000 image format to detect
+     *     both (down to 4.0 and 4.3 respectively) since they are the only ones that support this feature.
+     *  2) Chrome versions 36 to 49 only support SVG Fragment Identifiers when used inside <img> elements. Use the WebP image format to detect webkit
+     *     browsers and then the support for Passive event listener to detect Chrome 50 and older.
+     *  3) Safari 6, iOS Safari 6.1 and Chrome versions 25 to 19 suupport calc() with -webkit- prefix but older do not support it at all. Fixed with Autoprefixer.
+     */
+  /* In Safari 11 SVG pattern elements with alpha are displayed with a black background instead of transparency. */
+}
+
+.no-csspointerevents .board--type-bulletin {
+  /* Instead of using a single div with multiple background images, use multiple divs each with their own background image pointing to its respective layer in the SVG stack. */
+}
+
+.no-csspointerevents .board--type-bulletin div {
+  position: absolute;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(13) {
+  margin-left: calc(35% / (-2));
+  margin-left: calc(35% / (-2));
+  left: 50%;
+  width: 35%;
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-plaque");
+  bottom: 0;
+  height: 95%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(12) {
+  margin-left: calc(calc((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (56px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-top-chains");
+  height: calc(((100% - 95%) / 1) + 22px * 2);
+  top: -22px;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(11) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-corners");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(10) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-horizontal-sides");
+  bottom: 0;
+  height: 95%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(9) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides");
+  height: calc(95% - (56px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 95%) / 1 + (56px - 9.4px));
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(8) {
+  margin-left: calc(calc((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (56px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-holes");
+  bottom: 0;
+  height: 95%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(7) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-depth");
+  bottom: 0;
+  height: 95%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(6) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-corners-depth");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(5) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-shadow");
+  bottom: 0;
+  height: 95%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(4) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides-shadow");
+  height: calc(95% - (56px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 95%) / 1 + (56px - 9.4px));
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(3) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-corners-shadow");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(2) {
+  margin-left: calc(calc(((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  margin-left: calc((((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  left: 50%;
+  width: calc(((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-holes-shadow");
+  bottom: 0;
+  height: 95%;
+}
+
+.no-csspointerevents .board--type-bulletin div:nth-child(1) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bulletin-planks");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-bulletin,
+.no-passiveeventlisteners.webp .board--type-bulletin {
+  background: none;
+  /* Instead of using a signle div with multiple background images pointing to a signle SVG file, use multiple divs, each with a single background
+         image pointing to an individual SVG file containing its respective layer of the original SVG stack. */
+}
+
+.jpeg2000 .board--type-bulletin div,
+.no-passiveeventlisteners.webp .board--type-bulletin div {
+  /* Safari won't display background image if background size and position aren't explicity set. */
+  background-size: 100% 100%;
+  background-position: center top;
+  position: absolute;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(13),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(13) {
+  margin-left: calc(35% / (-2));
+  margin-left: calc(35% / (-2));
+  left: 50%;
+  width: 35%;
+  background-image: url("https://cdn.rawgit.com/andresangelini/71186cfd071e53e4b229ef78ca60207f/raw/c33418e6d8c07c71914cc08bbc7e442d58a7f838/plaque.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(12),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(12) {
+  margin-left: calc(calc((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (56px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/f3415703d9665bc6d2e0fcdefd90c252/raw/8a9d7f56730094d681762638c76db1df3ffdd538/topChains.svg");
+  height: calc(((100% - 95%) / 1) + 22px * 2);
+  top: -22px;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(11),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(11) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/ba8d6301a441f9477aff3a93fc93a730/raw/32c534c1f196783a4243d4edd7ec1c268a0b9eaf/bulletinCorners.svg");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(10),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(10) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/6a8860e1d3de990f1ce5a7d27aa26a30/raw/2412b8174843f846425aad281f4ad7dab3146fd7/bulletinHorizontalSides.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(9),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(9) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/22f602b5edb5671703ead1224719c029/raw/97d9e61f03bf75e1e75a4ce7a68b3ccaf6302f5c/verticalSides.svg");
+  height: calc(95% - (56px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 95%) / 1 + (56px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(8),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(8) {
+  margin-left: calc(calc((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (56px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/0fd40f69566ddb6eed16ca9154a1cdbf/raw/5be1d70ebad0936f390a57c8fa04331361a70d76/bulletinHoles.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(7),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(7) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/faa4ae5d44ce839a00161699039e70e4/raw/2a48fb59bd15ff0d96dd1e996a5157619ccea832/horizontalSidesDepth.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(6),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(6) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/fc167511c668f4f22a843dd5ad032c4f/raw/9ca8e54fd838d1dcbb2ac84aee0dd0e5395b993b/bulletinCornersDepth.svg");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(5),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(5) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/81f11231029c5ca6fbf1d8dcfa723319/raw/e2dceca30c636d82df3110583a6df4f508166b88/horizontalSidesShadow.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(4),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(4) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/a9fc2dec3f4ce794ed0f4e35c5d723ac/raw/06960348119880580e6fb49b344c9f69793241bb/verticalSidesShadow.svg");
+  height: calc(95% - (56px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 95%) / 1 + (56px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(3),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(3) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/39b00b169ef54b45aadf7a1b90df9e9f/raw/bd9afd6fbeea29b140f32a58e038fc2c20e15836/bulletinCornersShadow.svg");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(2),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(2) {
+  margin-left: calc(calc(((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  margin-left: calc((((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  left: 50%;
+  width: calc(((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/ea2cbe38787edd3feaa6c0b072f40b6c/raw/3dc3ba415a2d88b6bf86eb3ce830cbfcf3117b73/bulletinHolesShadow.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000 .board--type-bulletin div:nth-child(1),
+.no-passiveeventlisteners.webp .board--type-bulletin div:nth-child(1) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/04efef31dfb360e613711a8c37aa96fb/raw/311911b99a4d0855a5f47f8aec5a93ed93be67e4/bulletinPlanks.svg");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin {
+  background-image: none;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div {
+  position: absolute;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(13) {
+  margin-left: calc(35% / (-2));
+  margin-left: calc(35% / (-2));
+  left: 50%;
+  width: 35%;
+  background-image: url("https://cdn.rawgit.com/andresangelini/71186cfd071e53e4b229ef78ca60207f/raw/c33418e6d8c07c71914cc08bbc7e442d58a7f838/plaque.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(12) {
+  margin-left: calc(calc((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (56px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg");
+  background-position: calc((0px * (1 * 0 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 0 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 1 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 1 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 2 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 2 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 3 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 3 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 4 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 4 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 5 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 5 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 6 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 6 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 7 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 7 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 8 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 8 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 9 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 9 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (2 * 0 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 0 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 1 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 1 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 2 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 2 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 3 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 3 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 4 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 4 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 5 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 5 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 6 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 6 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 7 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 7 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 8 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 8 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 9 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 9 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px)));
+  background-size: 200% 45.94px;
+  background-repeat: no-repeat;
+  height: calc(((100% - 95%) / 1) + 22px * 2);
+  box-sizing: border-box;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(11) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/ba8d6301a441f9477aff3a93fc93a730/raw/32c534c1f196783a4243d4edd7ec1c268a0b9eaf/bulletinCorners.svg");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(10) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/6a8860e1d3de990f1ce5a7d27aa26a30/raw/2412b8174843f846425aad281f4ad7dab3146fd7/bulletinHorizontalSides.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(9) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/22f602b5edb5671703ead1224719c029/raw/97d9e61f03bf75e1e75a4ce7a68b3ccaf6302f5c/verticalSides.svg");
+  height: calc(95% - (56px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 95%) / 1 + (56px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(8) {
+  margin-left: calc(calc((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (56px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (56px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/0fd40f69566ddb6eed16ca9154a1cdbf/raw/5be1d70ebad0936f390a57c8fa04331361a70d76/bulletinHoles.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(7) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/faa4ae5d44ce839a00161699039e70e4/raw/2a48fb59bd15ff0d96dd1e996a5157619ccea832/horizontalSidesDepth.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(6) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/fc167511c668f4f22a843dd5ad032c4f/raw/9ca8e54fd838d1dcbb2ac84aee0dd0e5395b993b/bulletinCornersDepth.svg");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(5) {
+  margin-left: calc(calc(100% - (56px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (56px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (56px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/81f11231029c5ca6fbf1d8dcfa723319/raw/e2dceca30c636d82df3110583a6df4f508166b88/horizontalSidesShadow.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(4) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/a9fc2dec3f4ce794ed0f4e35c5d723ac/raw/06960348119880580e6fb49b344c9f69793241bb/verticalSidesShadow.svg");
+  height: calc(95% - (56px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 95%) / 1 + (56px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(3) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/39b00b169ef54b45aadf7a1b90df9e9f/raw/bd9afd6fbeea29b140f32a58e038fc2c20e15836/bulletinCornersShadow.svg");
+  bottom: 0;
+  height: 95%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(2) {
+  margin-left: calc(calc(((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  margin-left: calc((((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  left: 50%;
+  width: calc(((100% - (56px - 9.4px) * 2) * 0.8) + 2.16px * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/ea2cbe38787edd3feaa6c0b072f40b6c/raw/3dc3ba415a2d88b6bf86eb3ce830cbfcf3117b73/bulletinHolesShadow.svg");
+  bottom: 0;
+  height: 95%;
+}
+
+.jpeg2000.peerconnection .board--type-bulletin div:nth-child(1) {
+  background-clip: padding-box;
+  background-color: #a2703f;
+  background-image: url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg");
+  background-position: calc((14% * (1 * 0 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 9) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 9) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 9) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 9) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 9) + 0px));
+  background-size: 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  -webkit-clip-path: polygon(0 calc(100% - (56px - 9.4px)), 5px 50%, 0 calc(56px - 7px), calc((56px - 9.4px) - 5px) calc((56px - 9.4px) - 5px), calc(56px - 9.4px) 0, calc(((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) + 5px) 5px, calc(((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) + 5px) 30px, calc(100% - ((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) - 5px) 30px, calc(100% - ((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) - 5px) 5px, calc(100% - (56px - 9.4px)) 0, calc((100% - (56px - 9.4px)) + 5px) calc((56px - 9.4px) - 5px), 100% calc(56px - 9.4px), calc(100% - 5px) 50%, 100% calc(100% - (56px - 9.4px)), calc((100% - (56px - 9.4px)) + 5px) calc((100% - (56px - 9.4px)) + 5px), calc(100% - (56px - 9.4px)) calc(100% - 5px), calc(56px - 9.4px) calc(100% - 5px), calc((56px - 9.4px) - 5px) calc((100% - (56px - 9.4px)) + 5px));
+          clip-path: polygon(0 calc(100% - (56px - 9.4px)), 5px 50%, 0 calc(56px - 7px), calc((56px - 9.4px) - 5px) calc((56px - 9.4px) - 5px), calc(56px - 9.4px) 0, calc(((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) + 5px) 5px, calc(((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) + 5px) 30px, calc(100% - ((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) - 5px) 30px, calc(100% - ((100% - ((100% - (56px - 9.4px) * 2) * 0.8)) / 2) - 5px) 5px, calc(100% - (56px - 9.4px)) 0, calc((100% - (56px - 9.4px)) + 5px) calc((56px - 9.4px) - 5px), 100% calc(56px - 9.4px), calc(100% - 5px) 50%, 100% calc(100% - (56px - 9.4px)), calc((100% - (56px - 9.4px)) + 5px) calc((100% - (56px - 9.4px)) + 5px), calc(100% - (56px - 9.4px)) calc(100% - 5px), calc(56px - 9.4px) calc(100% - 5px), calc((56px - 9.4px) - 5px) calc((100% - (56px - 9.4px)) + 5px));
+  height: 95%;
+  width: 100%;
+  bottom: 0;
+}
+
+.board--type-sign {
+  /* Use SVG fragment identifiers to select specific parts of the image. */
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-top-chains"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bottom-chains"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-corners"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-horizontal-sides"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-holes"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-depth"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-corners-depth"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-corners-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-holes-shadow"), url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-planks");
+  background-position: center -22px, center calc(100% + 22px), center center, center center, center calc(50% - 3px), center center, center center, center center, center center, center calc(50% - 3px), center center, center center, center center;
+  background-size: calc((100% - (29.78px - 9.4px) * 2) * 0.8) calc(((100% - 80%) / 2) + 22px * 2), calc((100% - (29.78px - 9.4px) * 2) * 0.8) calc(((100% - 80%) / 2) + 22px * 2), 100% 80%, calc(100% - (29.78px - 9.4px) * 2) 80%, 100% calc(80% - (29.78px - 9.4px) * 2 - 6.5px), calc((100% - (29.78px - 9.4px) * 2) * 0.8) 80%, calc(100% - (29.78px - 9.4px) * 2) 80%, 100% 80%, calc(100% - (29.78px - 9.4px) * 2) 80%, 100% calc(80% - (29.78px - 9.4px) * 2 - 6.5px), 100% 80%, calc(((100% - (29.78px - 9.4px) * 2) * 0.8) + 2.16px * 2) 80%, 100% 80%;
+  /* IE < 11 don't scale SVGs properly when used as background images. Since IE < 11 don't support CSS pointer-events, use it to detect these versions. */
+  /* *
+     *  1) Safari and Safari iOS don't support SVG Fragment Identifiers at all, so use JPEG 2000 image format to detect
+     *     both (down to 4.0 and 4.3 respectively) since they are the only ones that support this feature.
+     *  2) Chrome versions 36 to 49 only support SVG Fragment Identifiers when used inside <img> elements. Use the WebP image format to detect webkit
+     *     browsers and then the support for Passive event listener to detect Chrome 50 and older.
+     *  3) Safari 6, iOS Safari 6.1 and Chrome versions 25 to 19 suupport calc() with -webkit- prefix but older do not support it at all. Fixed with Autoprefixer.
+     */
+  /* In Safari 11 SVG pattern elements with alpha are displayed with a black background instead of transparency. */
+  /* Firefox 15 and older don't display SVG elements that use viewbox attribute. Use sandbox support to
+       decide whether to display or not the board. Note that as a compromise Firefox 16 which does display
+       the SVG properly but it will be skipped for convenience. */
+}
+
+.no-csspointerevents .board--type-sign {
+  background-color: blue;
+  background-image: none;
+  overflow: hidden;
+  /* Instead of using a single div with multiple background images, use multiple divs each with their own background image pointing to its respective layer in the SVG stack. */
+}
+
+.no-csspointerevents .board--type-sign div {
+  position: absolute;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(13) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-top-chains");
+  height: calc(((100% - 80%) / 2) + 22px * 2);
+  top: -22px;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(12) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-bottom-chains");
+  height: calc(((100% - 80%) / 2) + 22px * 2);
+  top: -22px;
+  top: calc(100% + 22px - (((100% - 80%) / 2) + 22px * 2));
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(11) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-corners");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(10) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-horizontal-sides");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(9) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides");
+  height: calc(80% - (29.78px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 80%) / 2 + (29.78px - 9.4px));
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(8) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-holes");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(7) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-depth");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(6) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-corners-depth");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(5) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-horizontal-sides-shadow");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(4) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-vertical-sides-shadow");
+  height: calc(80% - (29.78px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 80%) / 2 + (29.78px - 9.4px));
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(3) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-corners-shadow");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(2) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-holes-shadow");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.no-csspointerevents .board--type-sign div:nth-child(1) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/d57f93b605eec432fdea98b969aaac72/raw/f0ee9369b781dcf01eefc37575a99d8e5dbe7b35/board.svg#l-sign-planks");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-sign,
+.no-passiveeventlisteners.webp .board--type-sign {
+  background-image: none;
+  overflow: hidden;
+  /* Instead of using a signle div with multiple background images pointing to a signle SVG file, use multiple divs, each with a single background
+         image pointing to an individual SVG file containing its respective layer of the original SVG stack. */
+}
+
+.jpeg2000 .board--type-sign div,
+.no-passiveeventlisteners.webp .board--type-sign div {
+  background-size: 100% 100%;
+  background-position: center top;
+  position: absolute;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(13),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(13) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/f3415703d9665bc6d2e0fcdefd90c252/raw/8a9d7f56730094d681762638c76db1df3ffdd538/topChains.svg");
+  height: calc(((100% - 80%) / 2) + 22px * 2);
+  top: -22px;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(12),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(12) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/96fc2fe2937f63997f972f203509bb28/raw/04eb599bf86ffce922d53071c8a10013743a3436/bottomChains.svg");
+  height: calc(((100% - 80%) / 2) + (22px / 2) * 2);
+  top: -22px;
+  top: calc(100% + 22px - (((100% - 80%) / 2) + 22px * 2));
+}
+
+.jpeg2000 .board--type-sign div:nth-child(11),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(11) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/00adf3ff339050dd484ef4133d581639/raw/9204a853448f0aef66be6aaaf09c40968d44e779/signCorners.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(10),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(10) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/3e76e8ae560573c809d7af9c32d79519/raw/cecd5219dd3c54a2b6bb47014e08b5e4caec306f/signHorizontalSides.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(9),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(9) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/22f602b5edb5671703ead1224719c029/raw/97d9e61f03bf75e1e75a4ce7a68b3ccaf6302f5c/verticalSides.svg");
+  height: calc(80% - (29.78px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 80%) / 2 + (29.78px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(8),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(8) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/62d7a5f742d96c5a8f4f6639f523b18e/raw/fc0c5666dfdf7daab0edf6ae2e5ea0bcf7a0da8c/signHoles.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(7),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(7) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/faa4ae5d44ce839a00161699039e70e4/raw/2a48fb59bd15ff0d96dd1e996a5157619ccea832/horizontalSidesDepth.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(6),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(6) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/ebd77441753241e7fe7715e732928f4e/raw/978b2b4cf77ac864b9b908b686c17e5c3f63d5e0/signCornersDepth.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(5),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(5) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/81f11231029c5ca6fbf1d8dcfa723319/raw/e2dceca30c636d82df3110583a6df4f508166b88/horizontalSidesShadow.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(4),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(4) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/a9fc2dec3f4ce794ed0f4e35c5d723ac/raw/06960348119880580e6fb49b344c9f69793241bb/verticalSidesShadow.svg");
+  height: calc(80% - (29.78px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 80%) / 2 + (29.78px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(3),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(3) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/1914067a3580101541fe0c0db4b22128/raw/5a78a3dd2c18db6cd796157f2fcbbddbb9b5aeba/signCornersShadow.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(2),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(2) {
+  margin-left: calc(calc(((100% - (29.78px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  margin-left: calc((((100% - (29.78px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  left: 50%;
+  width: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) + 2.16px * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/a1dcb47272d9745ee2a57dd4b73d5678/raw/6e0f2aa4de5bbe89e3877c0976ec470e74259189/signHolesShadow.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000 .board--type-sign div:nth-child(1),
+.no-passiveeventlisteners.webp .board--type-sign div:nth-child(1) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/f0c776eef5d1a6edc29caa351c572075/raw/e20d6b5ff84f3428a45cd8a9cc8a3b0f11bde7f6/signPlanks.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-sign {
+  background-image: none;
+}
+
+.jpeg2000.peerconnection .board--type-sign div {
+  position: absolute;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(13) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg");
+  background-position: calc((0px * (1 * 0 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 0 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 1 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 1 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 2 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 2 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 3 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 3 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 4 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 4 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 5 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 5 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 6 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 6 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 7 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 7 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 8 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 8 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (1 * 9 + 0)) + calc((0px * 0) + 0px)) calc((-45.94px * (1 * 9 + 0)) + calc((0px * 0) + (100% + 4.24px - 22px))), calc((0px * (2 * 0 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 0 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 1 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 1 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 2 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 2 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 3 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 3 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 4 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 4 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 5 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 5 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 6 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 6 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 7 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 7 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 8 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 8 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px))), calc((0px * (2 * 9 + -1)) + calc((0px * 0) + 100%)) calc((calc(-45.94px / 2) * (2 * 9 + -1)) + calc((0px * 0) + (100% - 45.94px + 4.24px - 22px)));
+  background-size: 200% 45.94px;
+  background-repeat: no-repeat;
+  height: calc(((100% - 80%) / 2) + 22px * 2);
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(12) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg"), url("https://cdn.rawgit.com/andresangelini/5969d4f442bb18ec3b81db61ab4202fe/raw/6a51402d5877ccfec47937952937af0d39aa7ddc/chainLink.svg");
+  background-position: calc((0px * (1 * 0 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 0 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 1 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 1 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 2 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 2 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 3 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 3 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 4 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 4 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 5 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 5 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 6 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 6 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 7 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 7 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 8 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 8 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (1 * 9 + 0)) + calc((0px * 0) + 0px)) calc((45.94px * (1 * 9 + 0)) + calc((0px * 0) + -4.24px)), calc((0px * (2 * 0 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 0 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 1 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 1 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 2 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 2 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 3 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 3 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 4 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 4 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 5 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 5 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 6 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 6 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 7 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 7 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 8 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 8 + -1)) + calc((0px * 0) + (45.94px - 4.24px))), calc((0px * (2 * 9 + -1)) + calc((0px * 0) + 100%)) calc((calc(45.94px / 2) * (2 * 9 + -1)) + calc((0px * 0) + (45.94px - 4.24px)));
+  background-size: 200% 45.94px;
+  background-repeat: no-repeat;
+  height: calc(((100% - 80%) / 2) + (22px / 2) * 2);
+  bottom: 0;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(11) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/00adf3ff339050dd484ef4133d581639/raw/9204a853448f0aef66be6aaaf09c40968d44e779/signCorners.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(10) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/3e76e8ae560573c809d7af9c32d79519/raw/cecd5219dd3c54a2b6bb47014e08b5e4caec306f/signHorizontalSides.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(9) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/22f602b5edb5671703ead1224719c029/raw/97d9e61f03bf75e1e75a4ce7a68b3ccaf6302f5c/verticalSides.svg");
+  height: calc(80% - (29.78px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 80%) / 2 + (29.78px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(8) {
+  margin-left: calc(calc((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  margin-left: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) / (-2));
+  left: 50%;
+  width: calc((100% - (29.78px - 9.4px) * 2) * 0.8);
+  background-image: url("https://cdn.rawgit.com/andresangelini/62d7a5f742d96c5a8f4f6639f523b18e/raw/fc0c5666dfdf7daab0edf6ae2e5ea0bcf7a0da8c/signHoles.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(7) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/faa4ae5d44ce839a00161699039e70e4/raw/2a48fb59bd15ff0d96dd1e996a5157619ccea832/horizontalSidesDepth.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(6) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/ebd77441753241e7fe7715e732928f4e/raw/978b2b4cf77ac864b9b908b686c17e5c3f63d5e0/signCornersDepth.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(5) {
+  margin-left: calc(calc(100% - (29.78px - 9.4px) * 2) / (-2));
+  margin-left: calc((100% - (29.78px - 9.4px) * 2) / (-2));
+  left: 50%;
+  width: calc(100% - (29.78px - 9.4px) * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/81f11231029c5ca6fbf1d8dcfa723319/raw/e2dceca30c636d82df3110583a6df4f508166b88/horizontalSidesShadow.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(4) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/a9fc2dec3f4ce794ed0f4e35c5d723ac/raw/06960348119880580e6fb49b344c9f69793241bb/verticalSidesShadow.svg");
+  height: calc(80% - (29.78px - 9.4px) * 2 - 6.5px);
+  top: calc((100% - 80%) / 2 + (29.78px - 9.4px));
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(3) {
+  background-image: url("https://cdn.rawgit.com/andresangelini/1914067a3580101541fe0c0db4b22128/raw/5a78a3dd2c18db6cd796157f2fcbbddbb9b5aeba/signCornersShadow.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+  width: 100%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(2) {
+  margin-left: calc(calc(((100% - (29.78px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  margin-left: calc((((100% - (29.78px - 9.4px) * 2) * 0.8) + 2.16px * 2) / (-2));
+  left: 50%;
+  width: calc(((100% - (29.78px - 9.4px) * 2) * 0.8) + 2.16px * 2);
+  background-image: url("https://cdn.rawgit.com/andresangelini/a1dcb47272d9745ee2a57dd4b73d5678/raw/6e0f2aa4de5bbe89e3877c0976ec470e74259189/signHolesShadow.svg");
+  bottom: calc((100% - 80%) / 2);
+  height: 80%;
+}
+
+.jpeg2000.peerconnection .board--type-sign div:nth-child(1) {
+  background-clip: padding-box;
+  background-color: #a2703f;
+  background-image: url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/b8c88924698d0c573c8332edd9077469/raw/48c4a78df192ce11cad5b2c6974f7f0c157af0e2/shades.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg"), url("https://cdn.rawgit.com/andresangelini/af502b3b5a38fab3f465f6ea7aaab3fb/raw/92b99800106f4818b7f750fd768c7ee0008d7b54/grooves.svg");
+  background-position: calc((14% * (1 * 0 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 0) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 0) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 1) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 1) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 2) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 2) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 3) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 3) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 4) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 4) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 5) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 5) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 6) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 6) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 7) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 7) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 8) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 8) + 0px)), calc((14% * (1 * 0 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 0 + 0)) + calc((760px * 9) + 0px)), calc((14% * (1 * 1 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 1 + 0)) + calc((760px * 9) + 0px)), calc((14% * (1 * 2 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 2 + 0)) + calc((760px * 9) + 0px)), calc((14% * (1 * 3 + 0)) + calc((0px * 9) + 12%)) calc((0px * (1 * 3 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 0) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 0) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 1) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 1) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 2) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 2) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 3) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 3) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 4) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 4) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 5) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 5) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 6) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 6) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 7) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 7) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 8) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 8) + 0px)), calc((-14% * (1 * 0 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 0 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 1 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 1 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 2 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 2 + 0)) + calc((760px * 9) + 0px)), calc((-14% * (1 * 3 + 0)) + calc((0px * 9) + 88%)) calc((0px * (1 * 3 + 0)) + calc((760px * 9) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 0) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 0) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 1) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 1) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 2) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 2) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 3) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 3) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 4) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 4) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 5) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 5) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 6) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 6) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 7) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 7) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 8) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 8) + 0px)), calc((568px * (1 * 0 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 0 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 1 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 1 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 2 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 2 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 3 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 3 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 4 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 4 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 5 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 5 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 6 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 6 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 7 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 7 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 8 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 8 + 0)) + calc((568px * 9) + 0px)), calc((568px * (1 * 9 + 0)) + calc((0px * 9) + 0px)) calc((0px * (1 * 9 + 0)) + calc((568px * 9) + 0px));
+  background-size: 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 200% 765px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px, 568px 568px;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  -webkit-clip-path: polygon(0 calc(100% - (29.78px - 9.4px)), 5px 50%, 0 calc(29.78px - 7px), calc((29.78px - 9.4px) - 5px) calc((29.78px - 9.4px) - 5px), calc(29.78px - 9.4px) 0, calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) 5px, calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) 30px, calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) 30px, calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) 5px, calc(100% - (29.78px - 9.4px)) 0, calc((100% - (29.78px - 9.4px)) + 5px) calc((29.78px - 9.4px) - 5px), 100% calc(29.78px - 9.4px), calc(100% - 5px) 50%, 100% calc(100% - (29.78px - 9.4px)), calc((100% - (29.78px - 9.4px)) + 5px) calc((100% - (29.78px - 9.4px)) + 5px), calc(100% - (29.78px - 9.4px)) calc(100% - 5px), calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) calc(100% - 5px),calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) calc((100% - (29.78px - 9.4px)) - 6.5px),calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) calc((100% - (29.78px - 9.4px)) - 6.5px),calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) calc(100% - 5px), calc(29.78px - 9.4px) calc(100% - 5px), calc((29.78px - 9.4px) - 5px) calc((100% - (29.78px - 9.4px)) + 5px));
+          clip-path: polygon(0 calc(100% - (29.78px - 9.4px)), 5px 50%, 0 calc(29.78px - 7px), calc((29.78px - 9.4px) - 5px) calc((29.78px - 9.4px) - 5px), calc(29.78px - 9.4px) 0, calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) 5px, calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) 30px, calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) 30px, calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) 5px, calc(100% - (29.78px - 9.4px)) 0, calc((100% - (29.78px - 9.4px)) + 5px) calc((29.78px - 9.4px) - 5px), 100% calc(29.78px - 9.4px), calc(100% - 5px) 50%, 100% calc(100% - (29.78px - 9.4px)), calc((100% - (29.78px - 9.4px)) + 5px) calc((100% - (29.78px - 9.4px)) + 5px), calc(100% - (29.78px - 9.4px)) calc(100% - 5px), calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) calc(100% - 5px),calc(100% - ((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) - 5px) calc((100% - (29.78px - 9.4px)) - 6.5px),calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) calc((100% - (29.78px - 9.4px)) - 6.5px),calc(((100% - ((100% - (29.78px - 9.4px) * 2) * 0.8)) / 2) + 5px) calc(100% - 5px), calc(29.78px - 9.4px) calc(100% - 5px), calc((29.78px - 9.4px) - 5px) calc((100% - (29.78px - 9.4px)) + 5px));
+  height: calc((calc(29.78px - 9.4px) * 2) + calc(80% - (29.78px - 9.4px) * 2 - 6.5px));
+  width: 100%;
+  top: calc(calc((100% - 80%) / 2));
+}
+
+.cssmozoutlineradius.no-sandbox ::after {
+  content: "Oops! It seems your browser or device isn't able to display this site properly. Please, update it.";
+  font-family: MedievalSharp;
+  font-size: 2em;
+  margin-top: -0.5em;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  color: black;
+  width: 100%;
+}
+
+.cssmozoutlineradius.no-sandbox .board {
+  display: none;
+}
+
+.no-csscalc body,
+.no-csscalc ::after,
+.no-cssgradients body,
+.no-cssgradients ::after,
+.no-generatedcontent body,
+.no-generatedcontent ::after {
+  content: "Oops! It seems your browser or device isn't able to display this site properly. Please, update it.";
+  font-family: MedievalSharp;
+  font-size: 2em;
+  margin-top: -0.5em;
+  position: absolute;
+  text-align: center;
+  top: 50%;
+  color: black;
+  width: 100%;
+}
+
+.no-csscalc .board,
+.no-cssgradients .board,
+.no-generatedcontent .board {
+  display: none;
+}
+
+.bulletin {
+  height: 95%;
+  left: 35%;
+  margin-left: -30%;
+  min-height: 30%;
+  min-width: 40%;
+  width: 60%;
+}
+
+.sign {
+  height: 95%;
+  right: 35%;
+  margin-right: -30%;
+  min-height: 30%;
+  min-width: 15%;
+  width: 25%;
+}
