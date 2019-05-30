@@ -1,0 +1,106 @@
+<svg class='board' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' baseProfile='full' xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <!--
+
+    DESCRIPTION:
+
+    This piece represents the top chains of a resizeable medieval style
+    board, which is one of the main responsive UI components at
+    thealchemisttower.com.
+
+    It's built using 5 layers of abstraction, which are as fallow:
+
+    1. BASIC SHAPE - bs - A shape defined only by its structure without
+                          any modification applied and meant to be
+                          reused.
+
+    2. COMPONENT   - c  - A reusable part made up from one or more basic
+                          shapes or even other components with
+                          modifications applied.
+
+    3. PATTERN     - p  - A design used to fill a basic shape or
+                          component.
+
+    4. CLIP-PATH   - cp - A path used to define the visible area of a
+                          basic shape or component.
+
+    5. LAYER       - l  - The final result meant to be used as a
+                          background image.
+
+
+    Colors are also separated into four layers:
+
+    Diffuse   - The lit area.
+    Specular  - The brightest area.
+    Shadow    - The darkest area.
+    Depth     - Not a color, but the third dimension of an object.
+
+  -->
+
+  <style>
+      .frame--color-diffuse {fill: #442d18;}
+      .frame--color-specular {fill: #76522e;}
+      .frame--color-depth {fill: #2b1c0f;}
+      .frame--color-shadow {fill: #68300e;}
+      .plaque--color-diffuse {fill: #bfa162;}
+      .plaque--color-specular {fill: #d7bb7d;}
+      .plaque--color-depth {fill: #5f1802;}
+      .plaque--color-shadow {fill: #2b1c0f;}
+      .nail--color-diffuse {fill: #553d30;}
+      .nail--color-specular {fill: #968378;}
+      .nail--color-depth {fill: #372318;}
+      .planks--color-diffuse {fill: #a2703f;}
+      .planks--color-shade {fill: #673110;}
+      .planks--color-shadow {stroke: #5f2301;}
+      .planks--color-specular {stroke: #b98f65;}
+      .link--color-diffuse {fill: #433d18;}
+      .link--color-specular {fill: #746b2e;}
+      .link--color-shadow {fill: #2a260f;}
+  </style>
+
+  <defs>
+    <rect id='bs-link-profile-diffuse' x='0' y='0' width='6.6490554' height='37.4776338' rx='3.32452782' ry='3.32452782'/>
+    <path id='bs-link-profile-specular' d='m 3.3096216,-5.5489361e-4 c -1.8360396,0 -3.305775,1.49983599361 -3.305775,3.33587599361 l 0,30.8333859 c 0,1.41963 0.8813604,2.588742 2.1337758,3.065352 -0.1315578,-0.357744 -0.2104158,-0.73857 -0.2104158,-1.141512 l 0,-30.8333859 c 0,-1.836231 1.4697354,-3.336067 3.3062562,-3.336067 0.4029438,0 0.8135807,0.07886 1.1713259,0.210415 C 5.922987,0.89275011 4.720887,-2.6589361e-4 3.3096216,-2.6589361e-4 Z'/>
+    <path id='bs-link-profile-shadow' d='m 4.4817173,0.20986089 c 0.1451946,0.37342 0.24042,0.777335 0.24042,1.20210001 l 0,30.8333831 c 0,1.836039 -1.4998362,3.305775 -3.3358758,3.305775 -0.416388,0 -0.8047242,-0.10062 -1.1720952,-0.24042 0.46728,1.270668 1.662648,2.16378 3.0954552,2.16378 1.8360396,0 3.3358758,-1.469736 3.3358758,-3.305772 l 0,-30.8333861 c 0,-1.432807 -0.8931318,-2.65818001 -2.16378,-3.12546001 z'/>
+    <path id='bs-link-front-diffuse' d='M 10.488082,-0.00101891 C 4.6892479,-0.00101891 -8.5739224e-8,4.6882291 -8.5739224e-8,10.487063 l 0,16.498582 C -8.5739224e-8,32.784672 4.6892479,37.473727 10.488082,37.473727 c 5.799027,0 10.518856,-4.689248 10.518856,-10.488082 l 0,-16.498582 c 0,-5.7988339 -4.719926,-10.48808191 -10.518856,-10.48808191 z m 0,5.67987401 c 2.668758,0 4.838404,2.139642 4.838404,4.8083999 l 0,16.498582 c 0,2.668759 -2.169646,4.838405 -4.838404,4.838405 -2.6687581,0 -4.8384041,-2.169646 -4.8384041,-4.838405 l 0,-16.498582 c 0,-2.6687579 2.169646,-4.8083999 4.8384041,-4.8083999 z'/>
+    <path id='bs-link-front-specular' d='M 10.488082,-0.00101909 C 4.6892479,-0.00101909 -8.5739224e-8,4.6882289 -8.5739224e-8,10.487063 l 0,16.498582 c 0,3.393577 1.622834985739224,6.378343 4.117143985739224,8.29449 -1.35818,-1.767568 -2.193784,-3.965006 -2.193784,-6.37113 l 0,-16.498582 c 0,-5.7989301 4.689152,-10.4880821 10.4880821,-10.4880821 2.426319,0 4.649723,0.84397 6.431716,2.223885 -1.92336,-2.513447 -4.946882,-4.14724499 -8.355076,-4.14724499 z m 4.20735,8.20428399 c 0.374853,0.682918 0.631103,1.447521 0.631103,2.2839901 l 0,16.498582 c 0,2.668759 -2.169647,4.838405 -4.838405,4.838405 -0.8266501,0 -1.6027361,-0.234362 -2.2839901,-0.60105 0.823044,1.498297 2.3798701,2.52441 4.2073501,2.52441 2.668758,0 4.838405,-2.169646 4.838405,-4.838405 l 0,-16.498582 c 0,-1.839693 -1.039769,-3.3980961 -2.554415,-4.2073501 z'/>
+    <path id='bs-link-front-shadow' d='m 16.919798,2.2228661 c 1.348852,1.762567 2.16378,3.950678 2.16378,6.341126 l 0,16.4985819 c 0,5.799026 -4.719349,10.488082 -10.5188559,10.488082 -2.4054502,0 -4.6030813,-0.835623 -6.37113,-2.193785 1.9161474,2.494406 4.9009136,4.117145 8.2944899,4.117145 5.799027,0 10.518856,-4.689248 10.518856,-10.488082 l 0,-16.498582 c 0,-3.3724199 -1.610814,-6.3467039 -4.08714,-8.2644859 z m -8.3545951,1.532726 c -2.6687581,0 -4.8384044,2.139641 -4.8384044,4.8084 l 0,16.4985819 c 0,1.842098 1.0364025,3.420311 2.5544144,4.237354 C 5.902311,28.610404 5.6503508,27.827596 5.6503508,26.986126 l 0,-16.498582 c 0,-2.6687579 2.1696463,-4.8083999 4.8384042,-4.8083999 0.829122,0 1.601294,0.236313 2.28399,0.60105 -0.821111,-1.49599 -2.375061,-2.52441 -4.2073497,-2.52441 z'/>
+
+    <symbol id='c-link-profile'>
+      <use xlink:href='#bs-link-profile-diffuse' class='link--color-diffuse'></use>
+      <use xlink:href='#bs-link-profile-shadow' class='link--color-shadow'></use>
+      <use xlink:href='#bs-link-profile-specular' class='link--color-specular'></use>
+    </symbol>
+
+    <symbol id='c-link-front'>
+      <use xlink:href='#bs-link-front-diffuse' class='link--color-diffuse'></use>
+      <use xlink:href='#bs-link-front-shadow' class='link--color-shadow'></use>
+      <use xlink:href='#bs-link-front-specular' class='link--color-specular'></use>
+    </symbol>
+
+    <g id='c-links-front'>
+      <use xlink:href='#c-link-front' transform='translate(0 -22.986)'></use>
+      <use xlink:href='#c-link-front' transform='translate(0 22.986)'></use>
+    </g>
+
+    <pattern id='p-top-chains-profile' x='0' y='100%' width='100%' height='45.9403662' patternUnits='userSpaceOnUse'>
+      <use xlink:href='#c-link-profile' transform='translate(7 8.4927324)'></use>
+    </pattern>
+
+    <pattern id='p-top-chains-front' x='0' y='100%' width='100%' height='45.9403662' patternUnits='userSpaceOnUse'>
+      <use xlink:href='#c-links-front' transform='translate(0 8.4927324)'></use>
+    </pattern>
+
+    <g id='c-top-chain'>
+      <rect y='-22.986' width='100%' height='100%' fill='url(#p-top-chains-front)'/>
+      <rect width='100%' height='100%' fill='url(#p-top-chains-profile)'/>
+    </g>
+    
+    <rect id='bs-red-box' width='100%' height='100%' fill='red'/>
+  </defs>
+  
+  <!-- LAYER: it's meant to be used as a background image. -->
+  <g id='l-top-chains' class='layer'>
+    <use xlink:href='#c-top-chain' transform='translate(6 0)'/>
+    <use xlink:href='#c-top-chain' x='100%' transform='translate(-26 0)'/>
+  </g>
+</svg>

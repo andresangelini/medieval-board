@@ -1,0 +1,76 @@
+<svg class='board' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' baseProfile='full' xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <!--
+
+    DESCRIPTION:
+
+    This piece represents the top chains of a resizeable medieval style
+    board, which is one of the main responsive UI components at
+    thealchemisttower.com.
+
+    It's built using 5 layers of abstraction, which are as fallow:
+
+    1. BASIC SHAPE - bs - A shape defined only by its structure without
+                          any modification applied and meant to be
+                          reused.
+
+    2. COMPONENT   - c  - A reusable part made up from one or more basic
+                          shapes or even other components with
+                          modifications applied.
+
+    3. PATTERN     - p  - A design used to fill a basic shape or
+                          component.
+
+    4. CLIP-PATH   - cp - A path used to define the visible area of a
+                          basic shape or component.
+
+    5. LAYER       - l  - The final result meant to be used as a
+                          background image.
+
+
+    Colors are also separated into four layers:
+
+    Diffuse   - The lit area.
+    Specular  - The brightest area.
+    Shadow    - The darkest area.
+    Depth     - Not a color, but the third dimension of an object.
+
+  -->
+
+  <style>
+      .frame--color-diffuse {fill: #442d18;}
+      .frame--color-specular {fill: #76522e;}
+      .frame--color-depth {fill: #2b1c0f;}
+      .frame--color-shadow {fill: #68300e;}
+      .plaque--color-diffuse {fill: #bfa162;}
+      .plaque--color-specular {fill: #d7bb7d;}
+      .plaque--color-depth {fill: #5f1802;}
+      .plaque--color-shadow {fill: #2b1c0f;}
+      .nail--color-diffuse {fill: #553d30;}
+      .nail--color-specular {fill: #968378;}
+      .nail--color-depth {fill: #372318;}
+      .planks--color-diffuse {fill: #a2703f;}
+      .planks--color-shade {fill: #673110;}
+      .planks--color-shadow {stroke: #5f2301;}
+      .planks--color-specular {stroke: #b98f65;}
+      .link--color-diffuse {fill: #433d18;}
+      .link--color-specular {fill: #746b2e;}
+      .link--color-shadow {fill: #2a260f;}
+  </style>
+
+  <defs>
+    <!-- BASIC SHAPES: used to build PATTERNS, CLIP-PATHS and COMPONENTS. -->
+    <rect id='bs-hole-side-clip' width='6' height='35'/>
+    
+    <!-- CLIP PATHS -->
+    <clipPath id='cp-bulletin-holes'>
+      <use xlink:href='#bs-hole-side-clip'/>
+      <use xlink:href='#bs-hole-side-clip' x='-100%' transform='scale(-1, 1)'/>
+      <rect y='34.49px' width='100%' height='28px'/>
+    </clipPath>
+  </defs>
+  
+  <!-- LAYER: it's meant to be used as a background image. -->
+  <g id='l-bulletin-holes-shadow' class='layer'>
+    <rect x='0' y='0' width='100%' height='62.48px' rx='21.51px' ry='21.51px' clip-path='url(#cp-bulletin-holes)' class='frame--color-shadow'/>
+  </g>
+</svg>

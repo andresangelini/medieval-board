@@ -1,0 +1,97 @@
+<svg class='board' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' baseProfile='full' xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <!--
+
+    DESCRIPTION:
+
+    This piece represents the top chains of a resizeable medieval style
+    board, which is one of the main responsive UI components at
+    thealchemisttower.com.
+
+    It's built using 5 layers of abstraction, which are as fallow:
+
+    1. BASIC SHAPE - bs - A shape defined only by its structure without
+                          any modification applied and meant to be
+                          reused.
+
+    2. COMPONENT   - c  - A reusable part made up from one or more basic
+                          shapes or even other components with
+                          modifications applied.
+
+    3. PATTERN     - p  - A design used to fill a basic shape or
+                          component.
+
+    4. CLIP-PATH   - cp - A path used to define the visible area of a
+                          basic shape or component.
+
+    5. LAYER       - l  - The final result meant to be used as a
+                          background image.
+
+
+    Colors are also separated into four layers:
+
+    Diffuse   - The lit area.
+    Specular  - The brightest area.
+    Shadow    - The darkest area.
+    Depth     - Not a color, but the third dimension of an object.
+
+  -->
+
+  <style>
+      .frame--color-diffuse {fill: #442d18;}
+      .frame--color-specular {fill: #76522e;}
+      .frame--color-depth {fill: #2b1c0f;}
+      .frame--color-shadow {fill: #68300e;}
+      .plaque--color-diffuse {fill: #bfa162;}
+      .plaque--color-specular {fill: #d7bb7d;}
+      .plaque--color-depth {fill: #5f1802;}
+      .plaque--color-shadow {fill: #2b1c0f;}
+      .nail--color-diffuse {fill: #553d30;}
+      .nail--color-specular {fill: #968378;}
+      .nail--color-depth {fill: #372318;}
+      .planks--color-diffuse {fill: #a2703f;}
+      .planks--color-shade {fill: #673110;}
+      .planks--color-shadow {stroke: #5f2301;}
+      .planks--color-specular {stroke: #b98f65;}
+      .link--color-diffuse {fill: #433d18;}
+      .link--color-specular {fill: #746b2e;}
+      .link--color-shadow {fill: #2a260f;}
+  </style>
+
+  <defs>
+    <!-- BASIC SHAPES: used to build PATTERNS, CLIP-PATHS and COMPONENTS. -->
+    <path id='bs-hole' d='m 9.999999e-8,-4e-7 0,28.1250004 L 32.416,28.125 32.416,-4e-7 Z M 16.191,2.2639996 c 4.4799,0 8.1133,3.6336 8.1133,8.1133004 0,4.4798 -3.6336,8.1113 -8.1133,8.1113 -4.4799,0 -8.0800998,-3.6316 -8.0800998,-8.1113 0,-4.4798004 3.6003998,-8.1133004 8.0800998,-8.1133004 z'/>
+    <path id='bs-hole-specular' d='m 22.796,5.7159 c 0.8843,1.2992 1.3859,2.8732 1.3859,4.5633 0,4.4797 -3.5991,8.1127 -8.079,8.1127 -1.6634,0 -3.2425,-0.49317 -4.5295,-1.3521 1.4628,2.1227 3.92,3.5154 6.6928,3.5154 4.4797,0 8.079,-3.6329 8.079,-8.1127 0,-2.7998 -1.3917,-5.2688 -3.5493,-6.7266 z'/>
+    <path id='bs-hole-depth' d='M 0,28.125 0,0 l 32.416,0 0,28.125 z m 16.191,-2.2642 c 4.4799,0 8.1133,-3.6336 8.1133,-8.1133 0,-4.4798 -3.6336,-8.1113 -8.1133,-8.1113 -4.4799,0 -8.0801,3.6316 -8.0801,8.1113 0,4.4798 3.6004,8.1133 8.0801,8.1133 z'/>
+    <rect id='bs-hole-clip' x='32' y='6.49' width='100%' height='100%'/>
+    <rect id='bs-hole-side-clip' width='6' height='35'/>
+    <rect id='bs-holes-bottom-clip' x='0' y='34.49px' width='100%' height='21.51'/>
+    <path id='bs-bottom-hole-specular' d='m 2.16016,28.125 0,-15.125 C 2.16016,6.957278 6.95728,2.160156 13,2.160156 l 19.416,0 L 32.41602,0 13,0 C 5.798,0 0,5.798 0,13 l 0,15.125 z'/>
+    <rect id='bs-bulletin-clipped-holes-left' x='0' y='0' width='100%' height='56px' rx='21.51px' ry='21.51px' clip-path='url(#cp-holes-left)'/>
+    
+    <!-- CLIP PATHS -->
+    <clipPath id='cp-holes-left'>
+      <use xlink:href='#bs-hole-clip'/>
+      <use xlink:href='#bs-holes-bottom-clip'/>
+    </clipPath>
+
+    <clipPath id='cp-holes-right'>
+      <use xlink:href='#bs-hole-clip' x='-100%' transform='scale(-1, 1)'/>
+      <use xlink:href='#bs-holes-bottom-clip' x='-100%' transform='scale(-1, 1)'/>
+    </clipPath>
+    
+    <!-- COMPONENTS: used to build LAYERS. -->
+    <use id='c-bulletin-clipped-holes' xlink:href='#bs-bulletin-clipped-holes-left' clip-path='url(#cp-holes-right)'/>
+  </defs>
+  
+  <!-- LAYER: it's meant to be used as a background image. -->
+  <g id='l-bulletin-holes' class='layer'>
+    <use xlink:href='#bs-hole-depth' transform='translate(0 6.49)' class='frame--color-depth'/>
+    <use xlink:href='#bs-hole-depth' x='-100%' transform='scale(-1, 1) translate(0 6.49)' class='frame--color-depth'/>
+    <use xlink:href='#c-bulletin-clipped-holes' class='frame--color-depth' clip-path='url(#cp-holes-left)' transform='translate(0 4.32)'/>
+    <use xlink:href='#bs-hole' transform='translate(0 6.49)' class='frame--color-diffuse'/>
+    <use xlink:href='#bs-hole' x='-100%' transform='scale(-1, 1) translate(0 6.49)' class='frame--color-diffuse'/>
+    <use xlink:href='#c-bulletin-clipped-holes' class='frame--color-diffuse'/>
+    <use xlink:href='#bs-hole-specular' class='frame--color-specular' transform='translate(0 6.49)'/>
+    <use xlink:href='#bs-hole-specular' class='frame--color-specular' x='100%' transform='translate(-32 6.49)'/>
+  </g>
+</svg>

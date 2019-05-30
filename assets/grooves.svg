@@ -1,0 +1,80 @@
+<svg class='board' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' baseProfile='full' xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <!--
+
+    DESCRIPTION:
+
+    This piece represents the top chains of a resizeable medieval style
+    board, which is one of the main responsive UI components at
+    thealchemisttower.com.
+
+    It's built using 5 layers of abstraction, which are as fallow:
+
+    1. BASIC SHAPE - bs - A shape defined only by its structure without
+                          any modification applied and meant to be
+                          reused.
+
+    2. COMPONENT   - c  - A reusable part made up from one or more basic
+                          shapes or even other components with
+                          modifications applied.
+
+    3. PATTERN     - p  - A design used to fill a basic shape or
+                          component.
+
+    4. CLIP-PATH   - cp - A path used to define the visible area of a
+                          basic shape or component.
+
+    5. LAYER       - l  - The final result meant to be used as a
+                          background image.
+
+
+    Colors are also separated into four layers:
+
+    Diffuse   - The lit area.
+    Specular  - The brightest area.
+    Shadow    - The darkest area.
+    Depth     - Not a color, but the third dimension of an object.
+
+  -->
+
+  <style>
+      .frame--color-diffuse {fill: #442d18;}
+      .frame--color-specular {fill: #76522e;}
+      .frame--color-depth {fill: #2b1c0f;}
+      .frame--color-shadow {fill: #68300e;}
+      .plaque--color-diffuse {fill: #bfa162;}
+      .plaque--color-specular {fill: #d7bb7d;}
+      .plaque--color-depth {fill: #5f1802;}
+      .plaque--color-shadow {fill: #2b1c0f;}
+      .nail--color-diffuse {fill: #553d30;}
+      .nail--color-specular {fill: #968378;}
+      .nail--color-depth {fill: #372318;}
+      .planks--color-diffuse {fill: #a2703f;}
+      .planks--color-shade {fill: #673110;}
+      .planks--color-shadow {stroke: #5f2301;}
+      .planks--color-specular {stroke: #b98f65;}
+      .link--color-diffuse {fill: #433d18;}
+      .link--color-specular {fill: #746b2e;}
+      .link--color-shadow {fill: #2a260f;}
+  </style>
+
+  <defs>
+    <!-- BASIC SHAPES: used to build PATTERNS, CLIP-PATHS and COMPONENTS. -->
+    <path id='bs-grooves' d='m 0.01939956,523.14959 c 158.58000044,6.1574 360.33000044,0.6314 568.00000044,0 M 0.01939956,483.11059 c 287.12000044,3.3267 248.15000044,-0.065 568.00000044,0 M 0.01939956,434.78655 c 205.12000044,4.6216 334.28000044,-6.1874 568.00000044,0 m -568.00000044,-51.16 c 280.08000044,-4.28 248.82000044,-1.68 568.00000044,0 m -568.00000044,-51.08 c 231.27000044,6.3806 310.00000044,-7.8545 568.00000044,0 M 0.01939956,285.94155 c 203.42000044,2.9748 415.51000044,-1.9793 568.00000044,0 M 0.01939956,234.64855 c 214.42000044,1.4411 334.74000044,-2.4729 568.00000044,0 m -568.00000044,-46.63 c 118.24000044,3.56 366.73000044,-5.3584 568.00000044,0 M 0.01939956,138.80455 C 192.8594,136.26875 351.1594,136.71295 568.0194,138.80455 M 0.01939956,88.104553 c 156.03000044,2.1377 341.39000044,-3.3165 568.00000044,0 M 0.01939956,46.863553 C 315.2894,44.929853 252.2094,45.643653 568.0194,46.863553 M 0.02939956,3.6715529 C 303.3094,15.305553 251.8994,-7.4864471 568.0194,3.6715529' opacity='0.5' stroke-width='2.8421' fill='none'/>
+    
+    <!-- COMPONENTS: used to build LAYERS. -->
+    <symbol id='c-grooves-shadow' preserveAspectRatio='none'>
+      <use xlink:href='#bs-grooves' class='planks--color-shadow'/>
+    </symbol>
+    
+    <symbol id='c-grooves-specular' preserveAspectRatio='none'>
+      <use xlink:href='#bs-grooves' class='planks--color-specular'/>
+    </symbol>
+  </defs>
+    
+  <!-- LAYER: it's meant to be used as a background image. -->
+  <g id='l-sign-planks' class='layer'>
+    <use xlink:href='#c-grooves-shadow' class='planks--color-shadow'/>
+    <use xlink:href='#c-grooves-specular' class='planks--color-specular' transform='translate(0 2.8421)'/>
+  </g>
+  
+</svg>

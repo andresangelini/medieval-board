@@ -1,0 +1,106 @@
+<svg class='board' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' baseProfile='full' xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <!--
+
+    DESCRIPTION:
+
+    This piece represents the top chains of a resizeable medieval style
+    board, which is one of the main responsive UI components at
+    thealchemisttower.com.
+
+    It's built using 5 layers of abstraction, which are as fallow:
+
+    1. BASIC SHAPE - bs - A shape defined only by its structure without
+                          any modification applied and meant to be
+                          reused.
+
+    2. COMPONENT   - c  - A reusable part made up from one or more basic
+                          shapes or even other components with
+                          modifications applied.
+
+    3. PATTERN     - p  - A design used to fill a basic shape or
+                          component.
+
+    4. CLIP-PATH   - cp - A path used to define the visible area of a
+                          basic shape or component.
+
+    5. LAYER       - l  - The final result meant to be used as a
+                          background image.
+
+
+    Colors are also separated into four layers:
+
+    Diffuse   - The lit area.
+    Specular  - The brightest area.
+    Shadow    - The darkest area.
+    Depth     - Not a color, but the third dimension of an object.
+
+  -->
+
+  <style>
+      .frame--color-diffuse {fill: #442d18;}
+      .frame--color-specular {fill: #76522e;}
+      .frame--color-depth {fill: #2b1c0f;}
+      .frame--color-shadow {fill: #68300e;}
+      .plaque--color-diffuse {fill: #bfa162;}
+      .plaque--color-specular {fill: #d7bb7d;}
+      .plaque--color-depth {fill: #5f1802;}
+      .plaque--color-shadow {fill: #2b1c0f;}
+      .nail--color-diffuse {fill: #553d30;}
+      .nail--color-specular {fill: #968378;}
+      .nail--color-depth {fill: #372318;}
+      .planks--color-diffuse {fill: #a2703f;}
+      .planks--color-shade {fill: #673110;}
+      .planks--color-shadow {stroke: #5f2301;}
+      .planks--color-specular {stroke: #b98f65;}
+      .link--color-diffuse {fill: #433d18;}
+      .link--color-specular {fill: #746b2e;}
+      .link--color-shadow {fill: #2a260f;}
+  </style>
+
+  <defs>
+    <!-- BASIC SHAPES: used to build PATTERNS, CLIP-PATHS and COMPONENTS. -->
+    <path id='bs-side' d='m 0,0 c 301.53,5.7865 603.05,5.7864 904.58,0 l 0,11.9 C 603.1,17.691 301.57,17.692 0,11.9 Z'/>
+    <path id='bs-side-specular' d='m904.58 0c-301.49 5.7909-603.01 5.7924-904.58 0v2.1602c301.57 5.7924 603.09 5.7909 904.58 0v-2.1602z'/>
+    <rect id='bs-side-top' x='0' y='0' width='100%' height='7'/>
+    <rect id='bs-side-bottom' x='-90%' y='0' width='100%' height='100%' transform='translate(2.16 0)'/>
+    
+    <!-- CLIP PATHS -->
+    <clipPath id='cp-horizontal-side-bottom'>
+      <use xlink:href='#bs-side-top'/>
+      <use xlink:href='#bs-side-bottom' transform='translate(1 0)'/>
+      <use xlink:href='#bs-side-bottom' x='-100%' transform='scale(-1, 1) translate(1 0)'/>
+    </clipPath>
+    
+    <clipPath id='cp-bottom-horizontal-side-bottom'>
+      <use xlink:href='#bs-side-top' y='-100%' transform='scale(1, -1) translate(0 6.5)'/>
+      <use xlink:href='#bs-side-bottom' y='-100%' transform='scale(1, -1) translate(1 6.5)'/>
+      <use xlink:href='#bs-side-bottom' x='-100%' y='-100%' transform='scale(-1, -1) translate(1 6.5)'/>
+    </clipPath>
+    
+    <clipPath id='cp-horizontal-side-center'>
+      <use xlink:href='#bs-side-bottom'/>
+      <use xlink:href='#bs-side-bottom' x='-100%' transform='scale(-1, 1)'/>
+    </clipPath>
+    
+    <!-- COMPONENTS: used to build LAYERS. -->
+    <symbol id='c-horizontal-side' height='16.25' width='100%' viewBox='0 0 905 16.25' preserveAspectRatio='none'>
+     <use xlink:href='#bs-side'/>
+    </symbol>
+    <symbol id='c-horizontal-side-specular' width='100%' height='16.25' viewBox='0 0 905 16.25' preserveAspectRatio='none'>
+     <use xlink:href='#bs-side-specular' class='frame--color-specular'/>
+    </symbol>
+    
+    <!-- Firefox 52 through 32 treat clip paths differently when the target element is transformed. Fix it by creating a component
+         with the clip path applied to it and then transform the element using this component. -->
+    <use id='c-clipped-horizontal-side' xlink:href='#c-horizontal-side' clip-path='url(#cp-horizontal-side-bottom)' width='100%' height='16.25' class='frame--color-diffuse'/>
+    <use id='c-clipped-horizontal-side-specular' xlink:href='#c-horizontal-side-specular' clip-path='url(#cp-horizontal-side-center)' width='100%' height='16.25' class='frame--color-specular'/>
+  </defs>
+  
+  <!-- LAYER: it's meant to be used as a background image. -->
+  <g id='l-sign-horizontal-sides' class='layer'>
+    <use xlink:href='#c-clipped-horizontal-side'/>
+    <use xlink:href='#c-clipped-horizontal-side' y='-100%' transform='scale(1, -1) translate(0 6.5)'/>
+    <use xlink:href='#c-horizontal-side-specular' width='100%' height='16.25' class='frame--color-specular'/>
+    <use xlink:href='#c-clipped-horizontal-side-specular' y='-100%' transform='scale(1, -1) translate(0 16.25)'/>
+  </g>
+</svg>
