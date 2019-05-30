@@ -50,7 +50,7 @@ Please nota that, normally, you wouldn't need to mess around with any of the oth
 
 [project]: https://codepen.io/andresangelini/project/editor/Aarxxz
 [pen]: https://codepen.io/andresangelini/pen/EXjqRv
-[blog]: https://thealchemistjournal.com/
+[blog]: https://medium.com/@angelini.andres/https-medium-com-angelini-andres-making-a-responsive-medieval-board-with-svg-stacks-chapter-i-f18490364e44
 [BEM]: http://getbem.com/
 [GNU GPL v3]: https://www.gnu.org/licenses/gpl-3.0
 [CC BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
