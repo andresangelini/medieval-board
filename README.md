@@ -18,8 +18,12 @@ This is a responsive medieval style board made out of a single SVG file that can
 - Opera.
 
 ## Dependencies:
-- Modernizr.
-- Autoprefixer.
+- node
+- npm
+- gulp
+- gulp-sass
+- gulp-autoprefixer
+- browser-sync
 
 ## Usage:
 1. Download and copy the files into your project.

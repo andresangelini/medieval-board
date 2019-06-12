@@ -65,7 +65,7 @@ $sign-holes-position-right            : calc-holes-position-right($sign-corner-w
 $sign-holes-shadow-width              : calc-holes-shadow-width($sign-corner-width);
 
 // URL path to the folder where all the SVG files are located.
-$base-url                             : "/assets/"
+$base-url                             : "/svg/";
 
 // URL path to the main SVG file.
 $path-to-board                        : $base-url + "board.svg";

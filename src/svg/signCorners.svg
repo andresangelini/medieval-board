@@ -1,0 +1,77 @@
+<svg class='board' xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' baseProfile='full' xmlns:cc='http://creativecommons.org/ns#' xmlns:dc='http://purl.org/dc/elements/1.1/'>
+  <!--
+
+    DESCRIPTION:
+
+    This piece represents the top chains of a resizeable medieval style
+    board, which is one of the main responsive UI components at
+    thealchemisttower.com.
+
+    It's built using 5 layers of abstraction, which are as fallow:
+
+    1. BASIC SHAPE - bs - A shape defined only by its structure without
+                          any modification applied and meant to be
+                          reused.
+
+    2. COMPONENT   - c  - A reusable part made up from one or more basic
+                          shapes or even other components with
+                          modifications applied.
+
+    3. PATTERN     - p  - A design used to fill a basic shape or
+                          component.
+
+    4. CLIP-PATH   - cp - A path used to define the visible area of a
+                          basic shape or component.
+
+    5. LAYER       - l  - The final result meant to be used as a
+                          background image.
+
+
+    Colors are also separated into four layers:
+
+    Diffuse   - The lit area.
+    Specular  - The brightest area.
+    Shadow    - The darkest area.
+    Depth     - Not a color, but the third dimension of an object.
+
+  -->
+
+  <style>
+      .frame--color-diffuse {fill: #442d18;}
+      .frame--color-specular {fill: #76522e;}
+      .frame--color-depth {fill: #2b1c0f;}
+      .frame--color-shadow {fill: #68300e;}
+      .plaque--color-diffuse {fill: #bfa162;}
+      .plaque--color-specular {fill: #d7bb7d;}
+      .plaque--color-depth {fill: #5f1802;}
+      .plaque--color-shadow {fill: #2b1c0f;}
+      .nail--color-diffuse {fill: #553d30;}
+      .nail--color-specular {fill: #968378;}
+      .nail--color-depth {fill: #372318;}
+      .planks--color-diffuse {fill: #a2703f;}
+      .planks--color-shade {fill: #673110;}
+      .planks--color-shadow {stroke: #5f2301;}
+      .planks--color-specular {stroke: #b98f65;}
+      .link--color-diffuse {fill: #433d18;}
+      .link--color-specular {fill: #746b2e;}
+      .link--color-shadow {fill: #2a260f;}
+  </style>
+
+  <defs>
+    <path id='bs-sign-corner' d='M 20.15039,0 C 20.14953,11.12808 11.12808,20.14866 0,20.14844 l 11.89954,9.61897 c 8.13024,-3.25266 14.61714,-9.73953 17.86982,-17.86982 z'/>
+    <path id='bs-sign-corner-outer-specular' d='m 20.148978,-2.8e-4 c -2.7e-4,3.50137 -0.895839,6.79142 -2.466843,9.66016 -0.315976,0.57697 -0.660284,1.13681 -1.029322,1.67773 a 20.150428,20.15 0 0 1 -0.351567,0.47071 c -0.268056,0.36931 -0.536231,0.73807 -0.828148,1.08789 a 20.150428,20.15 0 0 1 -0.546881,0.60351 c -0.261036,0.2884 -0.517821,0.58067 -0.794947,0.85352 a 20.150428,20.15 0 0 1 -0.636724,0.57617 c -0.272925,0.24684 -0.541951,0.49673 -0.828147,0.72851 a 20.150428,20.15 0 0 1 -0.722676,0.53907 c -0.290926,0.21489 -0.578262,0.43349 -0.880868,0.63281 a 20.150428,20.15 0 0 1 -0.730486,0.44336 c -0.330857,0.19837 -0.6611043,0.39661 -1.003931,0.57617 a 20.150428,20.15 0 0 1 -0.6933747,0.33203 c -0.3717379,0.17691 -0.7431159,0.35148 -1.1269741,0.50586 a 20.150428,20.15 0 0 1 -0.7011848,0.25586 c -0.4592498,0.1651 -0.9185995,0.33089 -1.3926096,0.46289 a 20.150428,20.15 0 0 1 -0.0254,0.008 c -0.007,0.002 -0.0145,0.002 -0.021501,0.004 -0.611343,0.16866 -1.2340662,0.30891 -1.8672295,0.41992 a 20.150428,20.15 0 0 1 -0.1367229,0.0254 C 2.7707888,19.96299 2.169686,20.0353 1.560673,20.08204 a 20.150428,20.15 0 0 1 -0.2851659,0.0234 c -0.42076905,0.0263 -0.84412802,0.0428 -1.2715071,0.043 a 20.150428,20.15 0 0 1 -0.004,0 L 2.4844227,22.1582 A 22.310473,22.309999 0 0 0 22.145,2.46875 L 20.148858,0 Z'/>
+    <path id='bs-sign-corner-inner-specular' d='M 28.19251,9.93538 A 29.889999,29.889999 0 0 1 9.94446,28.18733 l 1.95508,1.58008 a 32.049812,32.049812 0 0 0 0.58008,-0.21094 c 0.0237,-0.01 0.0467,-0.0212 0.0703,-0.0312 a 32.049812,32.049812 0 0 0 2.80664,-1.35547 c 0.031,-0.0169 0.0608,-0.0357 0.0918,-0.0527 a 32.049812,32.049812 0 0 0 2.58789,-1.58399 c 0.0738,-0.0502 0.14543,-0.10349 0.21875,-0.15429 a 32.049812,32.049812 0 0 0 2.33984,-1.7793 c 0.0676,-0.0566 0.13406,-0.11471 0.20118,-0.17188 a 32.049812,32.049812 0 0 0 2.13281,-1.98632 c 0.0771,-0.0787 0.15031,-0.16075 0.22656,-0.24024 a 32.049812,32.049812 0 0 0 1.91797,-2.18164 c 0.0513,-0.0642 0.0996,-0.13072 0.15039,-0.19531 a 32.049812,32.049812 0 0 0 1.74219,-2.43555 c 0.0269,-0.0417 0.0514,-0.0851 0.0781,-0.12695 a 32.049812,32.049812 0 0 0 1.53907,-2.67969 c 0.01,-0.0189 0.0197,-0.0377 0.0293,-0.0566 a 32.049812,32.049812 0 0 0 1.17188,-2.62109 L 28.19249,9.9355 Z'/>
+  </defs>
+  
+  <!-- LAYER: it's meant to be used as a background image. -->
+  <g id='l-sign-corners' class='layer'>
+    <use xlink:href='#bs-sign-corner' class='frame--color-diffuse'/>
+    <use xlink:href='#bs-sign-corner' x='-100%' transform='scale(-1, 1)' class='frame--color-diffuse'/>
+    <use xlink:href='#bs-sign-corner' x='-100%' y='-100%' transform='scale(-1, -1) translate(0 6.5)' class='frame--color-diffuse'/>
+    <use xlink:href='#bs-sign-corner' y='-100%' transform='scale(1, -1) translate(0 6.5)' class='frame--color-diffuse'/>
+    <use xlink:href='#bs-sign-corner-outer-specular' class='frame--color-specular'/>
+    <use xlink:href='#bs-sign-corner-outer-specular' x='-100%' transform='scale(-1, 1)' class='frame--color-specular'/>
+    <use xlink:href='#bs-sign-corner-inner-specular' x='-100%' y='-100%' transform='scale(-1, -1) translate(0 6.5)' class='frame--color-specular'/>
+    <use xlink:href='#bs-sign-corner-inner-specular' y='-100%' transform='scale(1, -1) translate(0 6.5)' class='frame--color-specular'/>
+  </g>
+</svg>

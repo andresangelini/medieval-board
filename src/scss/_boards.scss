@@ -4,12 +4,12 @@
   background-repeat: no-repeat;
   box-sizing: border-box;
   position: absolute;
-  
+
   @media only screen and (max-width: 480px) {
     margin-left: -50%;
     width: 100%;
   }
-  
+
   &--type-bulletin {
     /* Use SVG fragment identifiers to select specific parts of the image. */
     background-image: url("#{$path-to-board}#l-top-chains"),
@@ -53,10 +53,10 @@
                      100% $bulletin-board-height,                         // #l-bulletin-corners-shadow
                      $bulletin-holes-shadow-width $bulletin-board-height, // #l-bulletin-holes-shadow
                      100% $bulletin-board-height;                         // #l-bulletin-planks
-    
+
     /* IE < 11 don't scale SVGs properly when used as background images. Since IE < 11 don't support CSS pointer-events, use it to detect these versions. */
     @at-root .no-csspointerevents & {
-      
+
       & div {
         position: absolute;
       }
@@ -76,7 +76,7 @@
       & div:nth-child(2) {@include holes("#{$path-to-board}#l-bulletin-holes-shadow", $bulletin-holes-shadow-width, $bulletin-board-height, 0);}
       & div:nth-child(1) {@include planks("#{$path-to-board}#l-bulletin-planks", $bulletin-board-height, 0);}
     }
-  
+
     /* *
      *  1) Safari and Safari iOS don't support SVG Fragment Identifiers at all, so use JPEG 2000 image format to detect
      *     both (down to 4.0 and 4.3 respectively) since they are the only ones that support this feature.
@@ -93,7 +93,7 @@
         background-position: center top;
         position: absolute;
       }
-      
+
       /* Instead of using a signle div with multiple background images pointing to a signle SVG file, use multiple divs, each with a single background
          image pointing to an individual SVG file containing its respective layer of the original SVG stack. */
       & div:nth-child(13) {@include plaque($path-to-plaque);}
@@ -110,15 +110,15 @@
       & div:nth-child(2) {@include holes($path-to-bulletin-holes-shadow, $bulletin-holes-shadow-width, $bulletin-board-height, 0);}
       & div:nth-child(1) {@include planks($path-to-bulletin-planks, $bulletin-board-height, 0);}
     }
-    
+
     /* In Safari 11 SVG pattern elements with alpha are displayed with a black background instead of transparency. */
     @at-root .jpeg2000.peerconnection & { // Change back to .jpeg2000 after testing.
       background-image: none; // Just make sure no background is displayed.
-      
+
       div {
         position: absolute;
       }
-      
+
       & div:nth-child(13) {@include plaque($path-to-plaque);}
       & div:nth-child(12) {
         @include chains-multiple-backgrounds($chains-width: $bulletin-holes-width,
@@ -189,17 +189,17 @@
       100% $sign-board-height,                                        // #l-sign-corners-shadow
       $sign-holes-shadow-width $sign-board-height,                    // #l-sign-holes-shadow
       100% $sign-board-height;                                        // #l-sign-planks
-    
+
     /* IE < 11 don't scale SVGs properly when used as background images. Since IE < 11 don't support CSS pointer-events, use it to detect these versions. */
     @at-root .no-csspointerevents & {
       background-color: blue;
       background-image: none;
       overflow: hidden;
-      
+
       & div {
         position: absolute;
       }
-      
+
       /* Instead of using a single div with multiple background images, use multiple divs each with their own background image pointing to its respective layer in the SVG stack. */
       & div:nth-child(13) {@include chains("#{$path-to-board}#l-top-chains", $sign-holes-width, #{calc-chains-height($sign-board-height, $chains-bottom-offset, 2)}, $chains-bottom-offset);}
       & div:nth-child(12) {
@@ -230,14 +230,14 @@
              .no-passiveeventlisteners.webp & {
       background-image: none;
       overflow: hidden;
-      
+
       div {
         // Safari won't display background image if background size and position aren't explicity set.
         background-size: 100% 100%;
         background-position: center top;
         position: absolute;
       }
-      
+
       /* Instead of using a signle div with multiple background images pointing to a signle SVG file, use multiple divs, each with a single background
          image pointing to an individual SVG file containing its respective layer of the original SVG stack. */
       & div:nth-child(13) { @include chains($path-to-top-chains, $sign-holes-width, $sign-top-chains-height, $chains-bottom-offset);}
@@ -261,11 +261,11 @@
     /* In Safari 11 SVG pattern elements with alpha are displayed with a black background instead of transparency. */
     @at-root .jpeg2000.peerconnection & { // Change back to .jpeg2000 after testing.
       background-image: none; // Just make sure no background is displayed.
-      
+
       div {
         position: absolute;
       }
-      
+
       & div:nth-child(13) {
         @include chains-multiple-backgrounds($chains-width: $sign-holes-width,
                                              $chains-height: $sign-top-chains-height,
@@ -325,7 +325,7 @@
     ::after {
       @include full-page-msg($browser-is-too-old);
     }
-             
+
     .board {
       display: none;
     }

@@ -1,0 +1,37 @@
+{
+  "name": "medieval-board",
+  "version": "1.0.0",
+  "description": "This is a responsive medieval style board made out of a single SVG file that can be set to any size. It has two different versions so that it can be used for displaying text as well as a menu button.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andresangelini/medieval-board.git"
+  },
+  "keywords": [
+    "css",
+    "sass",
+    "svg",
+    "button",
+    "responsive"
+  ],
+  "author": "Andrés Angelini",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/andresangelini/medieval-board/issues"
+  },
+  "homepage": "https://github.com/andresangelini/medieval-board#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.5",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^6.1.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-modernizr": "^3.2.1",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "modernizr": "^3.7.1"
+  }
+}
