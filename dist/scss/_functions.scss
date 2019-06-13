@@ -1,0 +1,490 @@
+// FUNCTIONS
+
+// Returns a message to be thrown when an @error occurs providing:
+// $function-name: the function where the error ocurred
+// $arg-name: the stringified name of the argument which caused the error
+// $arg: the actual argument value (without quotes).
+// $expected-args: a Sass list with the expected arguments or a string with
+// proper explanation of what's required
+@function invalid-arg($function-name, $arg-name, $arg, $expected-args) {
+  @return "#{$function-name}: #{$arg-name} is invalid, was #{inspect($arg)}, " +
+          "expected #{$expected-args}.";
+};
+
+// Checks all the arguments in a function and throws an error if found or returns true otherwise.
+// $function-name: string;
+// $args: ("arg": ("name": "arg",
+//                 "value": $arg,
+//                 "check": boolean,
+//                 "expected": list)
+//        )
+@function check-args($function-name, $args) {
+  @if (type-of($function-name) != "string") {
+    @error invalid-arg("check-args", "$function-name", $function-name,
+                       "string");
+  } @else if (type-of($args) != "map") {
+    @error invalid-arg("check-args", "$args", $args, "map");
+  }
+
+  @each $key, $val in $args {
+    @if (type-of($val) != "map") {
+      @error invalid-arg("check-args", "$args value", $val, "map");
+    } @else if (map-get($val, "check") == false) {
+      @error invalid-arg($function-name,
+                         "#{map-get($val, 'name')}",
+                         map-get($val, "value"),
+                         map-get($val, "expected"));
+    }
+  }
+
+  @return true;
+};
+
+// Checks if a value is actually a calc() function and returns a boolean.
+@function is-calc($value) {
+  @return str_slice("#{$value}", 0, 4) == "calc";
+}
+
+// Strips the "calc" part from a calc() function or returns the argument if it's
+// present.
+@function strip-calc($calc) {
+  @if (is-calc($calc)) {
+    @return unquote(str_slice("#{$calc}", 5, -1));
+  } @else {
+    @return $calc;
+  }
+}
+
+// Checks if a value is a number and returns a boolean.
+@function is-number($value) {
+  @return type-of($value) == "number";
+}
+
+// Checks if a value is a number with units and returns a boolean.
+@function has-units($value) {
+  @if (is-number($value)) {
+    @return not unitless($value);
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is a integer and returns a boolean.
+@function is-integer($value) {
+  @if (is-number($value) and not has-units($value)) {
+    @return $value % 1 == 0;
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is a psoitive number and returns a boolean.
+@function is-positive($value) {
+  @if (is-number($value)) {
+    @return $value > 0;
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is a percentage and returns a boolean.
+@function is-percentage($value) {
+  @if (is-number($value)) {
+    @return unit($value) == "%";
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is a <length> and returns a boolean.
+@function is-length($value) {
+  @if (is-number($value)) {
+    @return has-units($value) and unit($value) != "%" or $value == 0;
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is in a list and returns a boolean.
+@function is-in-list($value, $list) {
+  @if (index($list, $value)) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is a valid keyword for background-position and returns a boolean.
+@function is-position-keyword($value) {
+  @return is-in-list($value, left right top bottom center);
+}
+
+// Checks if a value is a valid global for background-position and returns a boolean.
+@function is-global($value) {
+  @return is-in-list($value, initial inherit unset);
+}
+
+// Checks if a value is a valid edge-offset for background-position and returns a boolean.
+@function is-edge-offset($value) {
+  @return length($value) == 2 and
+          is-position-keyword(nth($value, 1)) and
+          nth($value, 1) != "center" and
+          is-length(nth($value, 2));
+}
+
+// Checks if a value is a valid position for background-position and returns a boolean.
+@function is-position($position) {
+  @return is-position-keyword($position) or
+          is-percentage($position) or
+          is-length($position) or
+          is-edge-offset($position) or
+          is-global($position) or
+          is-calc($position);
+}
+
+// Convert a keyword into a <percentage> value or do nothing otherwise.
+@function keyword-to-percentage($keyword) {
+  $keywords: (
+    left: 0,
+    right: 100%,
+    top: 0,
+    bottom: 100%,
+    center: 50%
+  );
+  
+  @if (map-has-key($keywords, $keyword)) {
+    @return map-get($keywords, $keyword);
+  } @else {
+    @return $keyword;
+  }
+}
+
+// Convert keywords and edge-offsets into <length> or do nothing otherwise.
+@function quantify-position($position) {
+  $edge-offsets: null;
+  
+  @if (is-position-keyword($position)) {
+    @return keyword-to-percentage($position);
+  } @else if (is-edge-offset($position)) {
+    $edge-offsets: (
+      left: nth($position, 2),
+      right: calc(100% - #{nth($position, 2)}),
+      top: nth($position, 2),
+      bottom: calc(100% - #{nth($position, 2)}),
+    );
+    
+    @return map-get($edge-offsets, nth($position, 1));
+  }@else {
+    @return $position;
+  }
+}
+
+// Checks if a value is a string and returns a boolean.
+@function is-string($value) {
+  @return type-of($value) == "string";
+}
+
+// Checks if a value is a function and returns a boolean.
+@function is-function($function, $value) {
+  @if (is-string($function) and is-string($value)) {
+    @return str-slice($value, 0, str-index($value, "(")) ==
+            str-slice($function, 0, str-index($function, "(")) and
+            str-slice($value, -1) == ")";
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is a url() function and returns a boolean.
+@function is-url($value) {
+  @return is-function("url()", $value);
+}
+
+// Checks if a value is a <gradient> and returns a boolean.
+@function is-gradient($value) {
+  $functions: "linear-gradient()", "radial-gradient()",
+              "repeating-linear-gradient()", "repeating-radial-gradient()";
+  
+  @each $function in $functions {
+    @if (is-function($function, $value)) {
+      @return true;
+    }
+  }
+  
+  @return false;
+}
+
+// Checks if a value is a element() function and returns a boolean.
+@function is-element($value) {
+  @return is-function("element()", $value);
+}
+
+// Checks if a value is an <image> and returns a boolean.
+@function is-image($value) {
+  @return is-url($value) or
+          is-gradient($value) or
+          is-element($value);
+}
+
+// Checks if a value is an <image> keyword and returns a boolean.
+@function is-image-keyword($value) {
+  @if (is-string($value)) {
+    @return $value == "none";
+  } @else {
+    @return false;
+  }
+}
+
+// Checks if a value is a background-size keyword and returns a boolean.
+@function is-size-keyword($value) {
+  @return is-in-list($value, cover contain);
+}
+
+// Checks if a value are valid dimensions for background-size and returns a boolean.
+@function are-dimensions($value) {
+  @if (length($value) == 1) {
+    @return is-size-keyword(nth($value, 1)) or
+            is-percentage(nth($value, 1)) or
+            is-length(nth($value, 1)) or
+            is-global(nth($value, 1)) or
+            is-calc(nth($value, 1)) or
+            nth($value, 1) == auto;
+  } @else if (length($value) == 2) {
+    @return (is-percentage(nth($value, 1)) or
+            is-length(nth($value, 1)) or
+            is-calc(nth($value, 1)) or
+            nth($value, 1) == auto) and
+            (is-percentage(nth($value, 2)) or
+            is-length(nth($value, 2)) or
+            is-calc(nth($value, 2)) or
+            nth($value, 2) == auto);
+  } @else {
+    @return false;
+  }
+}
+
+// Returns multiple background-positions in a linear pattern where:
+// $line-x and $line-y are the coordinates of the line pattern's top left corner.
+// $tile-dx and $tile-dy are the horizontal and vertical distances between each background-image or "tile".
+// $a and $b belong to $a * $i + $b with $i being the iterator used to loop through a number of $lines.
+// $imgs is the number of background-images per line.
+@function _tiling-line-position($line-x: 0px, $line-y: 0px, $tile-dx: 0px, $tile-dy: 0px, $a: 1, $b: 0, $tiles: 1) {
+  $result: null;
+  
+  @for $i from 0 to $tiles {
+    $result: $result, calc((#{$tile-dx} * (#{$a} * #{$i} + #{$b})) + #{$line-x}) +
+                      " " +
+                      calc((#{$tile-dy} * (#{$a} * #{$i} + #{$b})) + #{$line-y});
+  }
+  
+  @return $result;
+}
+
+// Returns multiple background-positions for tiling background-images where:
+// $tiling-x and $tiling-y are the coordinates of the tiling's top left corner.
+// $tile-dx and $tile-dy are the horizontal and vertical distances between each background-image or "tile".
+// $line-dx and $line-dy are the horizontal and vertical distances between each line of background-images.
+// $a and $b belong to $a * $i + $b with $i being the iterator used to loop through a number of $lines.
+// $tiles-per-line is the number of background-images per line.
+// $lines is the number of lines per tiling.
+@function tiling-positions($tiling-x: 0px,
+                           $tiling-y: 0px,
+                           $tile-dx: 0px,
+                           $tile-dy: 0px,
+                           $line-dx: 0px,
+                           $line-dy: 0px,
+                           $a: 1,
+                           $b: 0,
+                           $tiles-per-line: 1,
+                           $lines: 1) {
+  $result: null;
+  $valid-positions: "keyword", "<percentage>", "<length>", "edge offset", "global", "calc()";
+  $valid-deltas: "<percentage>", "<length>";
+  $valid-amounts: "integer > 0";
+
+  $args: ("tiling-x": ("name": "$tiling-x",
+                "value": $tiling-x,
+                "check": is-position($tiling-x),
+                "expected": $valid-positions),
+          "tiling-y": ("name": "$tiling-y",
+                "value": $tiling-y,
+                "check": is-position($tiling-y),
+                "expected": $valid-positions),
+          "tile-dx": ("name": "$tile-dx",
+                      "value": $tile-dx,
+                      "check": is-delta($tile-dx),
+                      "expected": $valid-deltas),
+          "tile-dy": ("name": "$tile-dy",
+                      "value": $tile-dy,
+                      "check": is-delta($tile-dy),
+                      "expected": $valid-deltas),
+          "line-dx": ("name": "$line-dx",
+                      "value": $line-dx,
+                      "check": is-delta($line-dx),
+                      "expected": $valid-deltas),
+          "line-dy": ("name": "$line-dy",
+                      "value": $line-dy,
+                      "check": is-delta($line-dy),
+                      "expected": $valid-deltas),
+          "a": ("name": "$a",
+                      "value": $a,
+                      "check": is-number($a) and not has-units($a),
+                      "expected": "<number>"),
+          "b": ("name": "$b",
+                      "value": $b,
+                      "check": is-number($b) and not has-units($b),
+                      "expected": "<number>"),
+          "tiles-per-line": ("name": "$tiles-per-line",
+                             "value": $tiles-per-line,
+                             "check": is-integer($tiles-per-line) and
+                                      is-positive($tiles-per-line),
+                             "expected": $valid-amounts),
+          "lines": ("name": "$lines",
+                            "value": $lines,
+                            "check": is-integer($lines) and
+                                     is-positive($lines),
+                            "expected": $valid-amounts),
+          );
+  
+  @if (check-args("tiling-positions", $args)) {
+    @for $i from 0 to $lines {
+      $result: $result, _tiling-line-position($line-x: calc((#{$line-dx} * #{$i}) + #{strip-calc(quantify-position($tiling-x))}),
+                                              $line-y: calc((#{$line-dy} * #{$i}) + #{strip-calc(quantify-position($tiling-y))}),
+                                              $tile-dx: $tile-dx,
+                                              $tile-dy: $tile-dy,
+                                              $a: $a,
+                                              $b: $b,
+                                              $tiles: $tiles-per-line);
+      }
+  }
+  
+  @return $result;
+}
+
+// Returns the same background-image value multiple times.
+@function tiling-images($source, $amount: 1) {
+  $result: unquote("#{$source}");
+  $valid-sources: "none", "url()", "linear-gradient()", "element()";
+  $valid-amounts: "integer > 0";
+  
+  $args: ("source": ("name": "$source",
+                   "value": $source,
+                   "check": is-image($source) or is-image-keyword($source),
+                   "expected": $valid-sources),
+          "amount": ("name": "$amount",
+                     "value": $amount,
+                     "check": is-integer($amount) and is-positive($amount),
+                     "expected": $valid-amounts)
+         );
+
+  @if (check-args("tiling-images", $args)) {
+    @for $i from 1 to $amount {
+      $result: $result, unquote("#{$source}");
+    }
+  }
+
+  @return $result;
+}
+
+// Returns the same background-size value multiple times.
+@function tiling-sizes($dimensions: inherit, $amount: 1) {
+  $result: null;
+  $valid-dimensions: "<keyword> or <width> <height> where <width> and " +
+                     "<height> are: <keyword>, <percentage>, <length>, " +
+                     "auto, global";
+  $valid-amounts: "integer > 0";
+  
+  $function-name: "tiling-sizes";
+  
+  $args: ("dimensions": ("name": "$dimensions",
+                     "value": $dimensions,
+                     "check": are-dimensions($dimensions),
+                     "expected": $valid-dimensions),
+          "amount": ("name": "$amount",
+                    "value": $amount,
+                    "check": is-integer($amount) and is-positive($amount),
+                    "expected": $valid-amounts),
+          );
+  
+  @if (check-args("tiling-sizes", $args)) {
+    @for $i from 1 through $amount {
+      $result: $result, unquote("#{$dimensions}");
+    }
+  }
+  
+  @return $result;
+}
+
+// Helper functions for calculating measurements for both types of boards.
+@function calc-side-position-left($corner-width) {
+  @return calc(#{$corner-width} - #{$side-overlap});
+}
+@function calc-side-position-right($corner-width) {
+  @return calc(100% - (#{$corner-width} - #{$side-overlap}));
+}
+@function calc-side-position-bottom($corner-width) {
+  @return calc((100% - (#{$corner-width} - #{$side-overlap})) - #{$board-depth});
+}
+@function calc-horizontal-width($corner-width) {
+  @return calc(100% - #{strip-calc(calc-side-position-left($corner-width))} * 2);
+}
+@function calc-board-position-top($board-height, $pairs-of-chains) {
+  @return calc((100% - #{$board-height}) / #{$pairs-of-chains});
+}
+@function calc-vertical-height($corner-width, $board-height) {
+  @return calc(#{$board-height} - #{strip-calc(calc-side-position-left($corner-width))} * 2 - #{$board-depth});
+}
+@function calc-vertical-position-top($corner-width) {
+  @return calc(100% - #{strip-calc(calc-side-position-left($corner-width))} - #{$board-depth});
+}
+@function calc-chains-height($board-height, $chains-position-top, $pairs-of-chains) {
+  @return calc(#{strip-calc(calc-board-position-top($board-height, $pairs-of-chains))} + #{$chains-position-top} * 2);
+}
+@function calc-holes-width($corner-width) {
+  @return calc(#{strip-calc(calc-horizontal-width($corner-width))} * 0.8);
+}
+@function calc-holes-shadow-width($corner-width) {
+  @return calc(#{strip-calc(calc-holes-width($corner-width))} + #{$shadow-width} * 2);
+}
+@function calc-holes-position-left($corner-width) {
+  @return calc(((100% - (#{strip-calc(calc-horizontal-width($corner-width))} * 0.8)) / 2) + #{$sign-holes-width-fix});
+}
+@function calc-holes-position-right($corner-width) {
+  @return calc(100% - ((100% - (#{strip-calc(calc-horizontal-width($corner-width))} * 0.8)) / 2) - #{$sign-holes-width-fix});
+}
+@function calc-corner-left($corner-width) {
+  @return calc(#{strip-calc(calc-side-position-left($corner-width))} - #{$sign-holes-width-fix});
+}
+@function calc-corner-right($corner-width) {
+  @return calc(#{strip-calc(calc-side-position-right($corner-width))} + #{$sign-holes-width-fix});
+}
+
+// Returns a clip-path for the board planks according to the corner's size.
+@function planks-clip($corner-width) {
+  // Sign board has bottom holes while bulletin board hasn't.
+  $bottom-holes: calc-holes-position-right($corner-width) $side-curve-right + "," +                        /* B holes BR */
+                 calc-holes-position-right($corner-width) calc-side-position-bottom($corner-width) + "," + /* B holes TR */
+                 calc-holes-position-left($corner-width) calc-side-position-bottom($corner-width) + "," +  /* B holes TL */
+                 calc-holes-position-left($corner-width) $side-curve-right + ",";                          /* B holes BL */
+  
+  @return polygon(0 calc-side-position-right($corner-width),                                               /* BL corner 3 */
+                  $side-curve-left 50%,                                                                    /* L side center */
+                  0 calc(#{$corner-width} - 7px),                                                          /* TL corner 1 */
+                  calc-corner-left($corner-width) calc-corner-left($corner-width),                         /* TL corner 2 */
+                  calc-side-position-left($corner-width) 0,                                                /* TL corner 3 */
+                  calc-holes-position-left($corner-width) $side-curve-left,                                /* Top holes TL */
+                  calc-holes-position-left($corner-width) 30px,                                            /* Top holes BL */
+                  calc-holes-position-right($corner-width) 30px,                                           /* Top holes BR */
+                  calc-holes-position-right($corner-width) $side-curve-left,                               /* Top holes TR */
+                  calc-side-position-right($corner-width) 0,                                               /* TR corner 1 */
+                  calc-corner-right($corner-width) calc-corner-left($corner-width),                        /* TR corner 2 */
+                  100% calc-side-position-left($corner-width),                                             /* TR corner 3 */
+                  $side-curve-right 50%,                                                                   /* R side center */
+                  100% calc-side-position-right($corner-width),                                            /* BR orner 1 */
+                  calc-corner-right($corner-width) calc-corner-right($corner-width),                       /* BR corner 2 */
+                  calc-side-position-right($corner-width) $side-curve-right,                               /* BR corner 3 */
+                  if($corner-width == $sign-corner-width, $bottom-holes, null)                             /* B holes BL */
+                  calc-side-position-left($corner-width) $side-curve-right,                                /* BL corner 1 */
+                  calc-corner-left($corner-width) calc-corner-right($corner-width)                         /* BL corner 2 */
+                  );
+}
