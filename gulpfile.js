@@ -36,7 +36,7 @@ const paths = {
 		output: 'dist/svg/'
 	},
 	html: {
-		input: 'src/**/*',
+		input: 'src/**/*.html',
 		output: 'dist/'
 	},
 	reload: './dist/'
@@ -90,7 +90,6 @@ function compileScss() {
       outputStyle: 'compressed'
     }).on('error', sass.logError))
     .pipe(autoprefixer({
-
       cascade: false
     }))
     .pipe(rename({suffix: '.' + settings.scss.suffix}))
