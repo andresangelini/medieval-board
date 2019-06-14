@@ -20,9 +20,15 @@ This is a responsive medieval style board made out of a single SVG file that can
 ## Dependencies:
 - node
 - npm
+- del
 - gulp
 - gulp-sass
+- gulp-sourcemaps
+- gulp-modernizr
 - gulp-autoprefixer
+- gulp-rename
+- gulp-concat
+- gulp-uglify
 - browser-sync
 
 ## Usage:
