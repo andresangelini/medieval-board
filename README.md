@@ -48,19 +48,19 @@ The `height` of the boards themsleves can be set throught the variables `$bullet
 
 Please nota that, normally, you wouldn't need to mess around with any of the other variables unless you have modified the SVG file.
 
-## License
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+## Legal
+[![License: MICopyright (c) 2019 Andrés AngeliniT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-- All the code in this project is licensed under the terms of the [GNU GPL v3].
+- All the code in this project is licensed under the terms of the [MIT] license.
 - Art assets, on the other hand, are licensed under the terms of the [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)][CC BY-SA 4.0] license.
 
-
+Copyright (c) 2019 Andrés Angelini
 
 
 [project]: https://codepen.io/andresangelini/project/editor/Aarxxz
 [pen]: https://codepen.io/andresangelini/pen/EXjqRv
 [blog]: https://medium.com/@angelini.andres/https-medium-com-angelini-andres-making-a-responsive-medieval-board-with-svg-stacks-chapter-i-f18490364e44
 [BEM]: http://getbem.com/
-[GNU GPL v3]: https://www.gnu.org/licenses/gpl-3.0
+[MIT]: https://opensource.org/licenses/MIT
 [CC BY-SA 4.0]: https://creativecommons.org/licenses/by-sa/4.0/
