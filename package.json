@@ -1,6 +1,6 @@
 {
   "name": "medieval-board",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "This is a responsive medieval style board made out of a single SVG file that can be set to any size. It has two different versions so that it can be used for displaying text as well as a menu button.",
   "main": "index.js",
   "scripts": {

@@ -6,11 +6,13 @@
 
 const settings = {
   scss: {
-    name: 'index',
+    srcName: 'index',
+    distName: 'medieval-board',
     suffix: 'min'
   },
   js: {
-    name: 'index',
+    srcName: 'index',
+    distName: 'medieval-board',
     suffix: 'min'
   }
 }
@@ -92,7 +94,8 @@ function compileScss() {
     .pipe(autoprefixer({
       cascade: false
     }))
-    .pipe(rename({suffix: '.' + settings.scss.suffix}))
+    .pipe(rename({basename: settings.scss.distName,
+                  suffix: '.' + settings.scss.suffix}))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(paths.scss.output))
     .pipe(browserSync.stream());
@@ -101,15 +104,16 @@ function compileScss() {
 // Compile and minify JS files
 function compileJs() {
   return gulp.src(paths.js.input)
-    .pipe(concat(settings.js.name + '.js'))
+    .pipe(concat(settings.js.srcName + '.js'))
     .pipe(uglify())
-    .pipe(rename({suffix: '.' + settings.js.suffix}))
+    .pipe(rename({basename: settings.js.distName,
+                  suffix: '.' + settings.js.suffix}))
     .pipe(gulp.dest(paths.js.output));
 }
 
 // Delete output folder
 function clean() {
-  return del([output]);
+  return del([paths.output]);
 }
 
 // Update files and reload browser when there are changes in the source files
@@ -132,4 +136,11 @@ function watch() {
  * Export Tasks
  */
 
-exports.serve = series([parallel(copyHtml, copySvgs, compileScss, compileJs)], watch);
+exports.copyHtml = copyHtml;
+exports.copySvgs = copySvgs;
+exports.compileScss = compileScss;
+exports.compileJs = compileJs;
+exports.clean = clean;
+exports.watch = watch;
+exports.build = series([clean], parallel(copyHtml, copySvgs, compileScss, compileJs));
+exports.serve = series([exports.build], watch);
